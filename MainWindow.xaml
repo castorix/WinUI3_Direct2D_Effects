@@ -1,0 +1,2306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="WinUI3_Direct2D_Effects.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinUI3_Direct2D_Effects"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid x:Name="mainGrid" >
+        <Grid.Resources>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <!--<ColumnDefinition Width="*"></ColumnDefinition>-->
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 0, 0, 0">
+                <StackPanel x:Name="spEff" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <TextBlock Margin="10, 12, 0, 0">
+                        Effect :
+                    </TextBlock>
+                    <ComboBox x:Name="cmbEffects" Width="230" Margin ="10, 3, 0, 0" Height="40" MaxDropDownHeight="400"
+                              ItemsSource="{x:Bind effects, Mode=OneWay}" SelectionChanged="cmbEffects_SelectionChanged">
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel x:Name="spAnim" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <TextBlock Margin="10, 12, 0, 0">
+                        Animation :
+                    </TextBlock>
+                    <ComboBox x:Name="cmbAnimations" Width="230" Margin ="10, 3, 0, 0" Height="40" MaxDropDownHeight="600"
+                               SelectedIndex="0" SelectionChanged="cmbAnimations_SelectionChanged">
+                        <ComboBoxItem Content="Translate"/>
+                        <ComboBoxItem Content="Cross-Fade"/>
+                        <ComboBoxItem Content="Perspective"/>
+                        <ComboBoxItem Content="Blur"/>
+                        <ComboBoxItem Content="Crop"/>
+                        <ComboBoxItem Content="Brightness"/>
+                        <ComboBoxItem Content="Rotate"/>
+                        <ComboBoxItem Content="Grid Mask"/>
+                        <ComboBoxItem Content="Chroma-Key"/>
+                        <!--<ComboBoxItem Content="Morphology"/>-->
+                        <ComboBoxItem Content="Zoom"/>
+                        <ComboBoxItem Content="Displacement/Turbulence"/>                       
+                    </ComboBox>
+                    <TextBlock Margin="10, 12, 0, 0" Foreground="Aqua">A few animations using some effects.
+                        Each image is displayed for 5 seconds
+                    </TextBlock>
+                </StackPanel>
+                <ToggleSwitch x:Name="tsEffectAnim" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 10, 0, 0"
+                              OffContent="Animations" OnContent="Built-in Effects" Toggled="tsEffectAnim_Toggled"/>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectGammaTransfer" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel x:Name="spGammaTransferRed" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Rectangle Margin="10, 0, 0, 0" Fill="Red" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                    <TextBlock Margin="10, 11, 0, 0">
+                    Amplitude :
+                    </TextBlock>
+                    <Slider x:Name="sliderRedAmplitude" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                        TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                        Value="{x:Bind GetRedAmplitude(RedAmplitude), BindBack=SetRedAmplitude, Mode=TwoWay}">
+                    </Slider>
+                    <TextBlock Margin="10, 11, 0, 0">
+                    Exponent :
+                    </TextBlock>
+                    <Slider x:Name="sliderRedExponent" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                        TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                        Value="{x:Bind GetRedExponent(RedExponent), BindBack=SetRedExponent, Mode=TwoWay}">
+                    </Slider>
+                    <TextBlock Margin="10, 11, 0, 0">
+                    Offset :
+                    </TextBlock>
+                    <Slider x:Name="sliderRedOffset" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                        TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                        Value="{x:Bind GetRedOffset(RedOffset), BindBack=SetRedOffset, Mode=TwoWay}">
+                    </Slider>
+                    <ToggleSwitch x:Name="tsRed" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                           OffContent="Disabled" OnContent="Enabled" Toggled="tsRed_Toggled"  IsOn="True"/>
+                </StackPanel>
+                <StackPanel x:Name="spGammaTransferGreen" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Rectangle Margin="10, 0, 0, 0" Fill="Green" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                    <TextBlock Margin="10, 11, 0, 0">
+                        Amplitude :
+                    </TextBlock>
+                    <Slider x:Name="sliderGreenAmplitude" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                            TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                            Value="{x:Bind GetGreenAmplitude(GreenAmplitude), BindBack=SetGreenAmplitude, Mode=TwoWay}">
+                    </Slider>
+                    <TextBlock Margin="10, 11, 0, 0">
+                        Exponent :
+                    </TextBlock>
+                    <Slider x:Name="sliderGreenExponent" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                            TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                            Value="{x:Bind GetGreenExponent(GreenExponent), BindBack=SetGreenExponent, Mode=TwoWay}">
+                    </Slider>
+                    <TextBlock Margin="10, 11, 0, 0">
+                        Offset :
+                    </TextBlock>
+                    <Slider x:Name="sliderGreenOffset" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                            TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                            Value="{x:Bind GetGreenOffset(GreenOffset), BindBack=SetGreenOffset, Mode=TwoWay}">
+                    </Slider>
+                    <ToggleSwitch x:Name="tsGreen" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                                  OffContent="Disabled" OnContent="Enabled" Toggled="tsGreen_Toggled"  IsOn="True"/>
+                </StackPanel>
+                <StackPanel x:Name="spGammaTransferBlue" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Rectangle Margin="10, 0, 0, 0" Fill="Blue" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                    <TextBlock Margin="10, 11, 0, 0">
+                        Amplitude :
+                    </TextBlock>
+                    <Slider x:Name="sliderBlueAmplitude" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                            TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                            Value="{x:Bind GetBlueAmplitude(BlueAmplitude), BindBack=SetBlueAmplitude, Mode=TwoWay}">
+                    </Slider>
+                    <TextBlock Margin="10, 11, 0, 0">
+                        Exponent :
+                    </TextBlock>
+                    <Slider x:Name="sliderBlueExponent" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                            TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                            Value="{x:Bind GetBlueExponent(BlueExponent), BindBack=SetBlueExponent, Mode=TwoWay}">
+                    </Slider>
+                    <TextBlock Margin="10, 11, 0, 0">
+                        Offset :
+                    </TextBlock>
+                    <Slider x:Name="sliderBlueOffset" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                            TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                            Value="{x:Bind GetBlueOffset(BlueOffset), BindBack=SetBlueOffset, Mode=TwoWay}">
+                    </Slider>
+                    <ToggleSwitch x:Name="tsBlue" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                                  OffContent="Disabled" OnContent="Enabled" Toggled="tsBlue_Toggled"  IsOn="True"/>
+                </StackPanel>
+                <StackPanel x:Name="spGammaTransferAlpha" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                    <Rectangle Margin="10, -7, 0, 0" Fill="Gray" Width="10" Height="10" Stroke="Gray" StrokeThickness="0" RadiusX="0" RadiusY="0" />
+                    <Rectangle Margin="0, -7, 0, 0" Fill="White" Width="10" Height="10" Stroke="Gray" StrokeThickness="0" RadiusX="0" RadiusY="0" />
+                    <Rectangle Margin="-30, 13, 0, 0" Fill="White" Width="10" Height="10" Stroke="Gray" StrokeThickness="0" RadiusX="0" RadiusY="0" />
+                    <Rectangle Margin="-10, 13, 0, 0" Fill="Gray" Width="10" Height="10" Stroke="Gray" StrokeThickness="0" RadiusX="0" RadiusY="0" />
+
+                    <!--<Rectangle Margin="10, 0, 0, 0" Fill="Transparent"  Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />-->
+
+                    <TextBlock Margin="10, 11, 0, 0">
+                        Amplitude :
+                    </TextBlock>
+                    <Slider x:Name="sliderAlphaAmplitude" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                            TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                            Value="{x:Bind GetAlphaAmplitude(AlphaAmplitude), BindBack=SetAlphaAmplitude, Mode=TwoWay}">
+                    </Slider>
+                    <TextBlock Margin="10, 11, 0, 0">
+                        Exponent :
+                    </TextBlock>
+                    <Slider x:Name="sliderAlphaExponent" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                            TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                            Value="{x:Bind GetAlphaExponent(AlphaExponent), BindBack=SetAlphaExponent, Mode=TwoWay}">
+                    </Slider>
+                    <TextBlock Margin="10, 11, 0, 0">
+                        Offset :
+                    </TextBlock>
+                    <Slider x:Name="sliderAlphaOffset" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                            TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                            Value="{x:Bind GetAlphaOffset(AlphaOffset), BindBack=SetAlphaOffset, Mode=TwoWay}">
+                    </Slider>
+                    <ToggleSwitch x:Name="tsAlpha" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                   OffContent="Disabled" OnContent="Enabled" Toggled="tsAlpha_Toggled"  IsOn="True"/>
+                </StackPanel>
+                <!--<StackPanel x:Name="spGammaTransferClampOutput" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <ToggleSwitch x:Name="tsClampOutput" Header="ClampOutput" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                                  OffContent="Disabled" OnContent="Enabled" Toggled="tsClampOutput_Toggled"  IsOn="True"/>
+                </StackPanel>-->
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectGaussianBlur" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <TextBlock Margin="10, 12, 0, 0">
+                    Standard Deviation :
+                </TextBlock>               
+                <Slider x:Name="sliderStandardDeviationGaussianBlur" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 5, 10, 0"
+                        TickFrequency="0.1" TickPlacement="Inline" Maximum="50" Minimum="0" StepFrequency="0.1"
+                        Value="{x:Bind GetStandardDeviationGaussianBlur(StandardDeviationGaussianBlur), BindBack=SetStandardDeviationGaussianBlur, Mode=TwoWay}">
+                </Slider>
+                <TextBlock Margin="10, 12, 0, 0">
+                    Optimization :
+                </TextBlock>
+                <ComboBox x:Name="cmbOptimizationGaussianBlur" Margin ="10, 3, 0, 0" Height="40"
+                          SelectedIndex="0" SelectionChanged="cmbOptimizationGaussianBlur_SelectionChanged">
+                    <ComboBoxItem Content="Speed"/>
+                    <ComboBoxItem Content="Balanced"/>
+                    <ComboBoxItem Content="Quality"/>
+                </ComboBox>
+                <TextBlock Margin="10, 12, 0, 0">
+                    Border Mode :
+                </TextBlock>
+                <ComboBox x:Name="cmbBorderModeGaussianBlur" Margin ="10, 3, 0, 0" Height="40"
+                          SelectedIndex="0" SelectionChanged="cmbBorderModeGaussianBlur_SelectionChanged">
+                    <ComboBoxItem Content="Soft"/>
+                    <ComboBoxItem Content="Hard"/>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectEdgeDetection" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Strength :
+                        </TextBlock>
+                        <Slider x:Name="sliderStrengthEdgeDetection" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                                TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                                Value="{x:Bind GetStrengthEdgeDetection(StrengthEdgeDetection), BindBack=SetStrengthEdgeDetection, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Blur Radius :
+                        </TextBlock>
+                        <Slider x:Name="sliderBlurRadiusEdgeDetection" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 5, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.1" SnapsTo="Ticks"
+                                Value="{x:Bind GetBlurRadiusEdgeDetection(BlurRadiusEdgeDetection), BindBack=SetBlurRadiusEdgeDetection, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                </StackPanel>
+                <TextBlock Margin="10, 12, 0, 0">
+                    Mode :
+                </TextBlock>
+                <ComboBox x:Name="cmbModeEdgeDetection" Margin ="10, 3, 0, 0" Height="40"
+                          SelectedIndex="0" SelectionChanged="cmbModeEdgeDetection_SelectionChanged">
+                    <ComboBoxItem Content="Sobel"/>
+                    <ComboBoxItem Content="Prewitt"/>
+                </ComboBox>
+                <!--<TextBlock Margin="10, 12, 0, 0">
+                    Alpha Mode :
+                </TextBlock>
+                <ComboBox x:Name="cmbAlphaModeEdgeDetection" Margin ="10, 3, 0, 0" Height="40"
+                          SelectedIndex="0" SelectionChanged="cmbAlphaModeEdgeDetection_SelectionChanged">
+                    <ComboBoxItem Content="PreMultiplied"/>
+                    <ComboBoxItem Content="Straight"/>
+                    <ComboBoxItem Content="Ignore"/>
+                </ComboBox>-->
+                <ToggleSwitch x:Name="tsOverlay_Edges" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                              OffContent="No Overlay Edges" OnContent="Overlay Edges" Toggled="tsOverlay_Edges_Toggled" IsOn="False"/>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectMorphology" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Width :
+                        </TextBlock>
+                        <Slider x:Name="sliderWidthMorphology" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                                TickFrequency="1" TickPlacement="Inline" Maximum="100" Minimum="1" StepFrequency="1"
+                                Value="{x:Bind GetWidthMorphology(WidthMorphology), BindBack=SetWidthMorphology, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Height :
+                        </TextBlock>
+                        <Slider x:Name="sliderHeightMorphology" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 5, 10, 0"
+                                TickFrequency="1" TickPlacement="Inline" Maximum="100" Minimum="1" StepFrequency="1" SnapsTo="Ticks"
+                                Value="{x:Bind GetHeightMorphology(HeightMorphology), BindBack=SetHeightMorphology, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                </StackPanel>
+                <TextBlock Margin="10, 12, 0, 0">
+                    Mode :
+                </TextBlock>
+                <ComboBox x:Name="cmbModeMorphology" Margin ="10, 3, 0, 0" Height="40"
+                          SelectedIndex="0" SelectionChanged="cmbModeMorphology_SelectionChanged">
+                    <ComboBoxItem Content="Erode"/>
+                    <ComboBoxItem Content="Dilate"/>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectDiscreteTransfer" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Rectangle Margin="10, 0, 10, 0" Fill="Red" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                        <NumberBox x:Name="nbDiscreteTransferRed1" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbDiscreteTransferRed2" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbDiscreteTransferRed3" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbDiscreteTransferRed4" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbDiscreteTransferRed5" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+
+                        </NumberBox>
+                        <!--<ToggleSwitch x:Name="tsDiscreteTransferRed" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                                      OffContent="Disabled" OnContent="Enabled" Toggled="tsDiscreteTransferRed_Toggled"  IsOn="True"/>-->
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Rectangle Margin="10, 0, 10, 0" Fill="Green" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                        <NumberBox x:Name="nbDiscreteTransferGreen1" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbDiscreteTransferGreen2" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbDiscreteTransferGreen3" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbDiscreteTransferGreen4" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbDiscreteTransferGreen5" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <!--<ToggleSwitch x:Name="tsDiscreteTransferGreen" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                                      OffContent="Disabled" OnContent="Enabled" Toggled="tsDiscreteTransferGreen_Toggled"  IsOn="True"/>-->
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Rectangle Margin="10, 0, 10, 0" Fill="Blue" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                        <NumberBox x:Name="nbDiscreteTransferBlue1" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbDiscreteTransferBlue2" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbDiscreteTransferBlue3" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbDiscreteTransferBlue4" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbDiscreteTransferBlue5" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <!--<ToggleSwitch x:Name="tsDiscreteTransferBlue" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                                     OffContent="Disabled" OnContent="Enabled" Toggled="tsDiscreteTransferBlue_Toggled"  IsOn="True"/>-->
+                    </StackPanel>
+                </StackPanel>
+
+                <Button x:Name="btnApplyDiscreteTransfer" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 10, 0, 0" Width="56" Height="34"
+                        Click="btnApplyDiscreteTransfer_Click" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                        FontSize="14" Padding="0, 0, 0, 0" Foreground="LimeGreen" Content ="Apply">
+                </Button>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectHueToRGB" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <TextBlock Margin="10, 12, 0, 0">
+                    Input Color Space :
+                </TextBlock>
+                <ComboBox x:Name="cmbHueToRGB" Margin ="10, 3, 0, 0" Height="40"
+                          SelectedIndex="0" SelectionChanged="cmbHueToRGB_SelectionChanged">
+                    <ComboBoxItem Content="Hue Saturation Value (HSV) to RGB"/>
+                    <ComboBoxItem Content="Hue Saturation Lightness (HSL) to RGB"/>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectRGBToHue" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <TextBlock Margin="10, 12, 0, 0">
+                    Output Color Space :
+                </TextBlock>
+                <ComboBox x:Name="cmbRGBToHue" Margin ="10, 3, 0, 0" Height="40"
+                          SelectedIndex="0" SelectionChanged="cmbRGBToHue_SelectionChanged">
+                    <ComboBoxItem Content="RGB to Hue Saturation Value (HSV)"/>
+                    <ComboBoxItem Content="RGB to Hue Saturation Lightness (HSL)"/>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectHueRotation" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <TextBlock Margin="10, 10, 0, 0">
+                    Angle :
+                </TextBlock>
+                <Slider x:Name="sliderAngleHueRotation" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 5, 10, 0"
+                        TickFrequency="0.1" TickPlacement="Inline" Maximum="360" Minimum="0" StepFrequency="0.1" SnapsTo="Ticks"
+                        Value="{x:Bind GetAngleHueRotation(AngleHueRotation), BindBack=SetAngleHueRotation, Mode=TwoWay}">
+                </Slider>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectLinearTransfer" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 0, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Rectangle Margin="10, 0, 10, 0" Fill="Red" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Y-Intercept :
+                        </TextBlock>
+                        <Slider x:Name="sliderRedYInterceptLinearTransfer" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                                TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="-1" StepFrequency="0.01"
+                                Value="{x:Bind GetRedYInterceptLinearTransfer(RedYInterceptLinearTransfer), BindBack=SetRedYInterceptLinearTransfer, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Slope :
+                        </TextBlock>
+                        <Slider x:Name="sliderRedSlopeLinearTransfer" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="100" Minimum="0" StepFrequency="0.1"
+                                Value="{x:Bind GetRedSlopeLinearTransfer(RedSlopeLinearTransfer), BindBack=SetRedSlopeLinearTransfer, Mode=TwoWay}">
+                        </Slider>
+                        <ToggleSwitch x:Name="tsLinearTransferRed" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                                      OffContent="Disabled" OnContent="Enabled" Toggled="tsLinearTransferRed_Toggled"  IsOn="True"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Rectangle Margin="10, 0, 10, 0" Fill="Green" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                        <TextBlock Margin="10, 10, 0, 0">
+                             Y-Intercept :
+                        </TextBlock>
+                        <Slider x:Name="sliderGreenYInterceptLinearTransfer" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                                TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="-1" StepFrequency="0.01"
+                                Value="{x:Bind GetGreenYInterceptLinearTransfer(GreenYInterceptLinearTransfer), BindBack=SetGreenYInterceptLinearTransfer, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Slope :
+                        </TextBlock>
+                        <Slider x:Name="sliderGreenSlopeLinearTransfer" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="100" Minimum="0" StepFrequency="0.1"
+                                Value="{x:Bind GetGreenSlopeLinearTransfer(GreenSlopeLinearTransfer), BindBack=SetGreenSlopeLinearTransfer, Mode=TwoWay}">
+                        </Slider>
+                        <ToggleSwitch x:Name="tsLinearTransferGreen" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                                      OffContent="Disabled" OnContent="Enabled" Toggled="tsLinearTransferGreen_Toggled"  IsOn="True"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Rectangle Margin="10, 0, 10, 0" Fill="Blue" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                        <TextBlock Margin="10, 10, 0, 0">
+                             Y-Intercept :
+                        </TextBlock>
+                        <Slider x:Name="sliderBlueYInterceptLinearTransfer" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                                TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="-1" StepFrequency="0.01"
+                                Value="{x:Bind GetBlueYInterceptLinearTransfer(BlueYInterceptLinearTransfer), BindBack=SetBlueYInterceptLinearTransfer, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Slope :
+                        </TextBlock>
+                        <Slider x:Name="sliderBlueSlopeLinearTransfer" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="100" Minimum="0" StepFrequency="0.1"
+                                Value="{x:Bind GetBlueSlopeLinearTransfer(BlueSlopeLinearTransfer), BindBack=SetBlueSlopeLinearTransfer, Mode=TwoWay}">
+                        </Slider>
+                        <ToggleSwitch x:Name="tsLinearTransferBlue" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                                      OffContent="Disabled" OnContent="Enabled" Toggled="tsLinearTransferBlue_Toggled"  IsOn="True"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+
+                        <Rectangle Margin="10, -6, 0, 0" Fill="Gray" Width="10" Height="10" Stroke="Gray" StrokeThickness="0" RadiusX="0" RadiusY="0" />
+                        <Rectangle Margin="0, -6, 0, 0" Fill="White" Width="10" Height="10" Stroke="Gray" StrokeThickness="0" RadiusX="0" RadiusY="0" />
+                        <Rectangle Margin="-30, 12, 0, 0" Fill="White" Width="10" Height="10" Stroke="Gray" StrokeThickness="0" RadiusX="0" RadiusY="0" />
+                        <Rectangle Margin="-10, 12, 10, 0" Fill="Gray" Width="10" Height="10" Stroke="Gray" StrokeThickness="0" RadiusX="0" RadiusY="0" />
+
+                        <TextBlock Margin="10, 10, 0, 0">
+                             Y-Intercept :
+                        </TextBlock>
+                        <Slider x:Name="sliderAlphaYInterceptLinearTransfer" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                                TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="-1" StepFrequency="0.01"
+                                Value="{x:Bind GetAlphaYInterceptLinearTransfer(AlphaYInterceptLinearTransfer), BindBack=SetAlphaYInterceptLinearTransfer, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Slope :
+                        </TextBlock>
+                        <Slider x:Name="sliderAlphaSlopeLinearTransfer" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="100" Minimum="0" StepFrequency="0.1"
+                                Value="{x:Bind GetAlphaSlopeLinearTransfer(AlphaSlopeLinearTransfer), BindBack=SetAlphaSlopeLinearTransfer, Mode=TwoWay}">
+                        </Slider>
+                        <ToggleSwitch x:Name="tsLinearTransferAlpha" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                                      OffContent="Disabled" OnContent="Enabled" Toggled="tsLinearTransferAlpha_Toggled"  IsOn="True"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectDirectionalBlur" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Standard Deviation :
+                        </TextBlock>
+                        <Slider x:Name="sliderStandardDeviationDirectionalBlur" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 0, 10, 0"
+                        TickFrequency="0.1" TickPlacement="Inline" Maximum="50" Minimum="0" StepFrequency="0.1"
+                        Value="{x:Bind GetStandardDeviationDirectionalBlur(StandardDeviationDirectionalBlur), BindBack=SetStandardDeviationDirectionalBlur, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Angle :
+                        </TextBlock>
+                        <Slider x:Name="sliderAngleDirectionalBlur" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 5, 10, 0"
+                        TickFrequency="0.1" TickPlacement="Inline" Maximum="180" Minimum="-180" StepFrequency="0.1" SnapsTo="Ticks"
+                        Value="{x:Bind GetAngleDirectionalBlur(AngleDirectionalBlur), BindBack=SetAngleDirectionalBlur, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                </StackPanel>
+                <TextBlock Margin="10, 12, 0, 0">
+                    Optimization :
+                </TextBlock>
+                <ComboBox x:Name="cmbOptimizationDirectionalBlur" Margin ="10, 3, 0, 0" Height="40"
+                          SelectedIndex="0" SelectionChanged="cmbOptimizationDirectionalBlur_SelectionChanged">
+                    <ComboBoxItem Content="Speed"/>
+                    <ComboBoxItem Content="Balanced"/>
+                    <ComboBoxItem Content="Quality"/>
+                </ComboBox>
+                <TextBlock Margin="10, 12, 0, 0">
+                    Border Mode :
+                </TextBlock>
+                <ComboBox x:Name="cmbBorderModeDirectionalBlur" Margin ="10, 3, 0, 0" Height="40"
+                          SelectedIndex="0" SelectionChanged="cmbBorderModeDirectionalBlur_SelectionChanged">
+                    <ComboBoxItem Content="Soft"/>
+                    <ComboBoxItem Content="Hard"/>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectConvolveMatrix" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nb1" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb2" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb3" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb4" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb5" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nb6" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb7" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb8" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb9" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb10" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nb11" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb12" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb13" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb14" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb15" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nb16" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb17" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb18" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb19" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb20" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nb21" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb22" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb23" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb24" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nb25" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 0, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 0, 0, 0">
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Border Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbBorderModeMatrix" Margin ="10, 2, 0, 0" Height="40"
+                                  SelectedIndex="0" SelectionChanged="cmbBorderModeMatrix_SelectionChanged">
+                            <ComboBoxItem Content="Soft"/>
+                            <ComboBoxItem Content="Hard"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 0, 0, 0">
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Scale Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbScaleModeMatrix" Margin ="10, 2, 0, 0" Height="40"
+                                  SelectedIndex="0" SelectionChanged="cmbScaleModeMatrix_SelectionChanged">
+                            <ComboBoxItem Content="Nearest Neighbor"/>
+                            <ComboBoxItem Content="Linear"/>
+                            <ComboBoxItem Content="Cubic"/>
+                            <ComboBoxItem Content="Multi Sample Linear"/>
+                            <ComboBoxItem Content="Anisotropic"/>
+                            <ComboBoxItem Content="High Quality Cubic"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 0, 0, 0">
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Divisor :
+                        </TextBlock>
+                        <NumberBox x:Name="nbDivisor" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1"
+                                   ValueChanged="nbDivisor_ValueChanged" Margin="10, 7, 0, 0">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 0, 0, 0">
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Bias :
+                        </TextBlock>
+                        <Slider x:Name="sliderBiasMatrix" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 6, 10, 0"
+                                TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                                Value="{x:Bind GetBiasMatrix(BiasMatrix), BindBack=SetBiasMatrix, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Width="300">
+                    <TextBlock Text="Some information" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                    <TextBlock TextWrapping="WrapWholeWords">
+                        <Span xml:space="preserve"><Run>Wikipedia : </Run><Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Kernel_(image_processing)">Kernel (image processing)</Hyperlink>
+<Run>Gimp : </Run><Hyperlink NavigateUri="https://docs.gimp.org/2.8/en/plug-in-convmatrix.html">Convolution Matrix</Hyperlink></Span>
+                    </TextBlock>
+                </StackPanel>
+                <Button x:Name="btnApplyConvolveMatrix" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 10, 0, 0" Width="56" Height="34"
+                        Click="btnApplyConvolveMatrix_Click" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                        FontSize="14" Padding="0, 0, 0, 0" Foreground="LimeGreen" Content ="Apply">
+                </Button>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectColorMatrix" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nbColorMatrix1" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbColorMatrix2" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbColorMatrix3" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbColorMatrix4" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nbColorMatrix5" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbColorMatrix6" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbColorMatrix7" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbColorMatrix8" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nbColorMatrix9" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbColorMatrix10" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbColorMatrix11" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbColorMatrix12" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nbColorMatrix13" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbColorMatrix14" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbColorMatrix15" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbColorMatrix16" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nbColorMatrix17" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbColorMatrix18" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbColorMatrix19" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbColorMatrix20" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                    </StackPanel>
+                </StackPanel>
+                <Button x:Name="btnApplyColorMatrix" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 10, 0, 0" Width="56" Height="34"
+    Click="btnApplyColorMatrix_Click" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+    FontSize="14" Padding="0, 0, 0, 0" Foreground="LimeGreen" Content ="Apply">
+                </Button>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectSaturation" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <TextBlock Margin="10, 10, 0, 0">
+                    Saturation :
+                </TextBlock>
+                <Slider x:Name="sliderSaturation" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 5, 10, 0"
+                        TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01" SnapsTo="Ticks"
+                        Value="{x:Bind GetSaturation(Saturation), BindBack=SetSaturation, Mode=TwoWay}">
+                </Slider>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectTableTransfer" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 5, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Rectangle Margin="10, 0, 10, 0" Fill="Red" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                        <NumberBox x:Name="nbTableTransferRed1" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTableTransferRed2" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTableTransferRed3" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTableTransferRed4" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTableTransferRed5" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <ToggleSwitch x:Name="tsTableTransferRed" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                             OffContent="Disabled" OnContent="Enabled" Toggled="tsTableTransferRed_Toggled"  IsOn="True"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Rectangle Margin="10, 0, 10, 0" Fill="Green" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                        <NumberBox x:Name="nbTableTransferGreen1" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTableTransferGreen2" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTableTransferGreen3" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTableTransferGreen4" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTableTransferGreen5" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <ToggleSwitch x:Name="tsTableTransferGreen" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                                      OffContent="Disabled" OnContent="Enabled" Toggled="tsTableTransferGreen_Toggled"  IsOn="True"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Rectangle Margin="10, 0, 10, 0" Fill="Blue" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                        <NumberBox x:Name="nbTableTransferBlue1" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTableTransferBlue2" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTableTransferBlue3" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTableTransferBlue4" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTableTransferBlue5" Minimum="0" Maximum="1" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <ToggleSwitch x:Name="tsTableTransferBlue" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 5, 0, 0"
+                                      OffContent="Disabled" OnContent="Enabled" Toggled="tsTableTransferBlue_Toggled"  IsOn="True"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <Button x:Name="btnApplyTableTransfer" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 10, 0, 0" Width="56" Height="34"
+               Click="btnApplyTableTransfer_Click" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+               FontSize="14" Padding="0, 0, 0, 0" Foreground="LimeGreen" Content ="Apply">
+                </Button>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectTint" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <Viewbox MaxWidth="400" MaxHeight="250" Stretch="Uniform" Margin="10, 10, 0, -20">
+                    <ColorPicker x:Name="cpTint"
+                                 ColorSpectrumShape="Ring"
+                                 IsColorPreviewVisible="True"
+                                 IsColorChannelTextInputVisible="True"
+                                 IsHexInputVisible="True"
+                                 IsAlphaTextInputVisible="False"
+                                 IsAlphaSliderVisible ="False"
+                                 Orientation="Horizontal"
+                                 Color="{x:Bind GetTintColor(TintColor), BindBack=SetTintColor, Mode=TwoWay}"/>
+                </Viewbox>
+                <!--<Rectangle Height="50" Width="50" Margin="10, 10, 0, 0">
+                    <Rectangle.Fill>
+                        <SolidColorBrush Color="{x:Bind cpTint.Color, Mode=OneWay}"/>
+                    </Rectangle.Fill>
+                </Rectangle>-->
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectDistantDiffuseLighting" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Azimuth :
+                        </TextBlock>
+                        <Slider x:Name="sliderDistantDiffuseLightingAzimuth" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="360" Minimum="0" StepFrequency="0.1"
+                                Value="{x:Bind GetDistantDiffuseLightingAzimuth(DistantDiffuseLightingAzimuth), BindBack=SetDistantDiffuseLightingAzimuth, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Elevation :
+                        </TextBlock>
+                        <Slider x:Name="sliderDistantDiffuseLightingElevation" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="360" Minimum="0" StepFrequency="0.1" SnapsTo="Ticks"
+                                Value="{x:Bind GetDistantDiffuseLightingElevation(DistantDiffuseLightingElevation), BindBack=SetDistantDiffuseLightingElevation, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Scale Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbScaleModeDistantDiffuse" Margin ="10, -5, 0, 0" VerticalAlignment="Top" Height="40"
+                                  SelectedIndex="0" SelectionChanged="cmbScaleModeDistantDiffuse_SelectionChanged">
+                            <ComboBoxItem Content="Nearest Neighbor"/>
+                            <ComboBoxItem Content="Linear"/>
+                            <ComboBoxItem Content="Cubic"/>
+                            <ComboBoxItem Content="Multi Sample Linear"/>
+                            <ComboBoxItem Content="Anisotropic"/>
+                            <ComboBoxItem Content="High Quality Cubic"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Diffuse Constant :
+                        </TextBlock>
+                        <Slider x:Name="sliderDistantDiffuseLightingDiffuseConstant" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                                TickFrequency="0.01" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01"
+                                Value="{x:Bind GetDistantDiffuseLightingDiffuseConstant(DistantDiffuseLightingDiffuseConstant), BindBack=SetDistantDiffuseLightingDiffuseConstant, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Surface Scale :
+                        </TextBlock>
+                        <Slider x:Name="sliderDistantDiffuseLightingSurfaceScale" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                                TickFrequency="0.01" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01" SnapsTo="Ticks"
+                                Value="{x:Bind GetDistantDiffuseLightingSurfaceScale(DistantDiffuseLightingSurfaceScale), BindBack=SetDistantDiffuseLightingSurfaceScale, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <Viewbox MaxWidth="400" MaxHeight="250" Stretch="Uniform" Margin="10, 10, 0, -20">
+                        <ColorPicker x:Name="cpDistantDiffuse"
+                                     ColorSpectrumShape="Ring"
+                                     IsColorPreviewVisible="True"
+                                     IsColorChannelTextInputVisible="True"
+                                     IsHexInputVisible="True"
+                                     IsAlphaTextInputVisible="False"
+                                     IsAlphaSliderVisible ="False"
+                                     Orientation="Horizontal"
+                                     Color="{x:Bind GetDistantDiffuseColor(DistantDiffuseColor), BindBack=SetDistantDiffuseColor, Mode=TwoWay}"/>
+                    </Viewbox>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectEmboss" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Height :
+                        </TextBlock>
+                        <Slider x:Name="sliderEmbossHeight" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.1"
+                                Value="{x:Bind GetEmbossHeight(EmbossHeight), BindBack=SetEmbossHeight, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Direction :
+                        </TextBlock>
+                        <Slider x:Name="sliderEmbossDirection" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="360" Minimum="0" StepFrequency="0.1"
+                                Value="{x:Bind GetEmbossDirection(EmbossDirection), BindBack=SetEmbossDirection, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectDistantSpecularLighting" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Azimuth :
+                        </TextBlock>
+                        <Slider x:Name="sliderDistantSpecularLightingAzimuth" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                          TickFrequency="0.1" TickPlacement="Inline" Maximum="360" Minimum="0" StepFrequency="0.1"
+                          Value="{x:Bind GetDistantSpecularLightingAzimuth(DistantSpecularLightingAzimuth), BindBack=SetDistantSpecularLightingAzimuth, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Elevation :
+                        </TextBlock>
+                        <Slider x:Name="sliderDistantSpecularLightingElevation" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                          TickFrequency="0.1" TickPlacement="Inline" Maximum="360" Minimum="0" StepFrequency="0.1" SnapsTo="Ticks"
+                          Value="{x:Bind GetDistantSpecularLightingElevation(DistantSpecularLightingElevation), BindBack=SetDistantSpecularLightingElevation, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Scale Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbScaleModeDistantSpecular" Margin ="10, -5, 0, 0" VerticalAlignment="Top" Height="40"
+                            SelectedIndex="0" SelectionChanged="cmbScaleModeDistantSpecular_SelectionChanged">
+                            <ComboBoxItem Content="Nearest Neighbor"/>
+                            <ComboBoxItem Content="Linear"/>
+                            <ComboBoxItem Content="Cubic"/>
+                            <ComboBoxItem Content="Multi Sample Linear"/>
+                            <ComboBoxItem Content="Anisotropic"/>
+                            <ComboBoxItem Content="High Quality Cubic"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Specular Constant :
+                        </TextBlock>
+                        <Slider x:Name="sliderDistantSpecularLightingSpecularConstant" Height="32" Width="150" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                          TickFrequency="0.01" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01"
+                          Value="{x:Bind GetDistantSpecularLightingSpecularConstant(DistantSpecularLightingSpecularConstant), BindBack=SetDistantSpecularLightingSpecularConstant, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Surface Scale :
+                        </TextBlock>
+                        <Slider x:Name="sliderDistantSpecularLightingSurfaceScale" Height="32" Width="150" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                          TickFrequency="0.01" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01" SnapsTo="Ticks"
+                          Value="{x:Bind GetDistantSpecularLightingSurfaceScale(DistantSpecularLightingSurfaceScale), BindBack=SetDistantSpecularLightingSurfaceScale, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Specular Exponent :
+                        </TextBlock>
+                        <Slider x:Name="sliderDistantSpecularLightingExponent" Height="32" Width="150" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="128" Minimum="1" StepFrequency="0.1" SnapsTo="Ticks"
+                                Value="{x:Bind GetDistantSpecularLightingExponent(DistantSpecularLightingExponent), BindBack=SetDistantSpecularLightingExponent, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <Viewbox MaxWidth="400" MaxHeight="250" Stretch="Uniform" Margin="10, 10, 0, -20">
+                        <ColorPicker x:Name="cpDistantSpecular"
+                               ColorSpectrumShape="Ring"
+                               IsColorPreviewVisible="True"
+                               IsColorChannelTextInputVisible="True"
+                               IsHexInputVisible="True"
+                               IsAlphaTextInputVisible="False"
+                               IsAlphaSliderVisible ="False"
+                               Orientation="Horizontal"
+                               Color="{x:Bind GetDistantSpecularColor(DistantSpecularColor), BindBack=SetDistantSpecularColor, Mode=TwoWay}"/>
+                    </Viewbox>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectPointDiffuseLighting" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Z-Axis :
+                        </TextBlock>
+                        <Slider x:Name="sliderPointDiffuseLightingZ" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="250" Minimum="0" StepFrequency="0.1"
+                                Value="{x:Bind GetPointDiffuseLightingZ(PointDiffuseLightingZ), BindBack=SetPointDiffuseLightingZ, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0" Foreground="Aqua">
+                            X and Y-Axis : From mouse
+                        </TextBlock>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Scale Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbScaleModePointDiffuse" Margin ="10, -5, 0, 0" VerticalAlignment="Top" Height="40"
+                         SelectedIndex="0" SelectionChanged="cmbScaleModePointDiffuse_SelectionChanged">
+                            <ComboBoxItem Content="Nearest Neighbor"/>
+                            <ComboBoxItem Content="Linear"/>
+                            <ComboBoxItem Content="Cubic"/>
+                            <ComboBoxItem Content="Multi Sample Linear"/>
+                            <ComboBoxItem Content="Anisotropic"/>
+                            <ComboBoxItem Content="High Quality Cubic"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Diffuse Constant :
+                        </TextBlock>
+                        <Slider x:Name="sliderPointDiffuseLightingDiffuseConstant" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                       TickFrequency="0.01" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01"
+                       Value="{x:Bind GetPointDiffuseLightingDiffuseConstant(PointDiffuseLightingDiffuseConstant), BindBack=SetPointDiffuseLightingDiffuseConstant, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Surface Scale :
+                        </TextBlock>
+                        <Slider x:Name="sliderPointDiffuseLightingSurfaceScale" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                       TickFrequency="0.01" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01" SnapsTo="Ticks"
+                       Value="{x:Bind GetPointDiffuseLightingSurfaceScale(PointDiffuseLightingSurfaceScale), BindBack=SetPointDiffuseLightingSurfaceScale, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <Viewbox MaxWidth="400" MaxHeight="250" Stretch="Uniform" Margin="10, 10, 0, -20">
+                        <ColorPicker x:Name="cpPointDiffuse"
+                            ColorSpectrumShape="Ring"
+                            IsColorPreviewVisible="True"
+                            IsColorChannelTextInputVisible="True"
+                            IsHexInputVisible="True"
+                            IsAlphaTextInputVisible="False"
+                            IsAlphaSliderVisible ="False"
+                            Orientation="Horizontal"
+                            Color="{x:Bind GetPointDiffuseColor(PointDiffuseColor), BindBack=SetPointDiffuseColor, Mode=TwoWay}"/>
+                    </Viewbox>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectPointSpecularLighting" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Z-Axis :
+                        </TextBlock>
+                        <Slider x:Name="sliderPointSpecularLightingZ" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                      TickFrequency="0.1" TickPlacement="Inline" Maximum="250" Minimum="0" StepFrequency="0.1"
+                      Value="{x:Bind GetPointSpecularLightingZ(PointSpecularLightingZ), BindBack=SetPointSpecularLightingZ, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0" Foreground="Aqua">
+                            X and Y-Axis : From mouse
+                        </TextBlock>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Scale Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbScaleModePointSpecular" Margin ="10, -5, 0, 0" VerticalAlignment="Top" Height="40"
+                                  SelectedIndex="0" SelectionChanged="cmbScaleModePointSpecular_SelectionChanged">
+                            <ComboBoxItem Content="Nearest Neighbor"/>
+                            <ComboBoxItem Content="Linear"/>
+                            <ComboBoxItem Content="Cubic"/>
+                            <ComboBoxItem Content="Multi Sample Linear"/>
+                            <ComboBoxItem Content="Anisotropic"/>
+                            <ComboBoxItem Content="High Quality Cubic"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Specular Exponent :
+                        </TextBlock>
+                        <Slider x:Name="sliderPointSpecularLightingExponent" Height="32" Width="150" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                      TickFrequency="0.1" TickPlacement="Inline" Maximum="128" Minimum="1" StepFrequency="0.1" SnapsTo="Ticks"
+                      Value="{x:Bind GetPointSpecularLightingSpecularExponent(PointSpecularLightingSpecularExponent), BindBack=SetPointSpecularLightingSpecularExponent, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Specular Constant :
+                        </TextBlock>
+                        <Slider x:Name="sliderPointSpecularLightingSpecularConstant" Height="32" Width="150" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                                TickFrequency="0.01" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01"
+                                Value="{x:Bind GetPointSpecularLightingSpecularConstant(PointSpecularLightingSpecularConstant), BindBack=SetPointSpecularLightingSpecularConstant, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Surface Scale :
+                        </TextBlock>
+                        <Slider x:Name="sliderPointSpecularLightingSurfaceScale" Height="32" Width="150" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                                TickFrequency="0.01" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01" SnapsTo="Ticks"
+                                Value="{x:Bind GetPointSpecularLightingSurfaceScale(PointSpecularLightingSurfaceScale), BindBack=SetPointSpecularLightingSurfaceScale, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <Viewbox MaxWidth="400" MaxHeight="250" Stretch="Uniform" Margin="10, 10, 0, -20">
+                        <ColorPicker x:Name="cpPointSpecular"
+                                     ColorSpectrumShape="Ring"
+                                     IsColorPreviewVisible="True"
+                                     IsColorChannelTextInputVisible="True"
+                                     IsHexInputVisible="True"
+                                     IsAlphaTextInputVisible="False"
+                                     IsAlphaSliderVisible ="False"
+                                     Orientation="Horizontal"
+                                     Color="{x:Bind GetPointSpecularColor(PointSpecularColor), BindBack=SetPointSpecularColor, Mode=TwoWay}"/>
+                    </Viewbox>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectPosterize" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 5, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Rectangle Margin="10, 0, 10, 0" Fill="Red" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                        <TextBlock Margin="10, 3, 0, 0">
+      						Value Count :
+                        </TextBlock>
+                        <Slider x:Name="sliderPosterizeRedValueCount" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+          				TickFrequency="1" TickPlacement="Inline" Maximum="16" Minimum="2" StepFrequency="1"
+          				Value="{x:Bind GetRedValueCount(RedValueCount), BindBack=SetRedValueCount, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Rectangle Margin="10, 0, 10, 0" Fill="Green" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                        <TextBlock Margin="10, 3, 0, 0">
+      					Value Count :
+                        </TextBlock>
+                        <Slider x:Name="sliderPosterizeGreenValueCount" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+          				TickFrequency="1" TickPlacement="Inline" Maximum="16" Minimum="2" StepFrequency="1"
+          				Value="{x:Bind GetGreenValueCount(GreenValueCount), BindBack=SetGreenValueCount, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Rectangle Margin="10, 0, 10, 0" Fill="Blue" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                        <TextBlock Margin="10, 3, 0, 0">
+      					Value Count :
+                        </TextBlock>
+                        <Slider x:Name="sliderPosterizeBlueValueCount" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+          				TickFrequency="1" TickPlacement="Inline" Maximum="16" Minimum="2" StepFrequency="1"
+          				Value="{x:Bind GetBlueValueCount(BlueValueCount), BindBack=SetBlueValueCount, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectShadow" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Blur Standard Deviation :
+                        </TextBlock>
+                        <Slider x:Name="sliderShadowBlurStandardDeviation" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="100" Minimum="0" StepFrequency="0.1"
+                                Value="{x:Bind GetShadowBlurStandardDeviation(ShadowBlurStandardDeviation), BindBack=SetShadowBlurStandardDeviation, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Translate :
+                        </TextBlock>
+                        <Slider x:Name="sliderShadowSize" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="100" Minimum="0" StepFrequency="0.1"
+                                Value="{x:Bind GetShadowTranslate(ShadowTranslate), BindBack=SetShadowTranslate, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Optimization :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbOptimizationShadow" Margin ="10, -5, 0, 0" VerticalAlignment="Top" Height="40"
+                    SelectedIndex="0" SelectionChanged="cmbOptimizationShadow_SelectionChanged">
+                            <ComboBoxItem Content="Speed"/>
+                            <ComboBoxItem Content="Balanced"/>
+                            <ComboBoxItem Content="Quality"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <Viewbox MaxWidth="400" MaxHeight="250" Stretch="Uniform" Margin="10, 10, 0, -20">
+                        <ColorPicker x:Name="cpShadow"
+                       ColorSpectrumShape="Ring"
+                       IsColorPreviewVisible="True"
+                       IsColorChannelTextInputVisible="True"
+                       IsHexInputVisible="True"
+                       IsAlphaTextInputVisible="False"
+                       IsAlphaSliderVisible ="False"
+                       Orientation="Horizontal"
+                       Color="{x:Bind GetShadowColor(ShadowColor), BindBack=SetShadowColor, Mode=TwoWay}"/>
+                    </Viewbox>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectSpotDiffuseLighting" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Z-Axis :
+                        </TextBlock>
+                        <Slider x:Name="sliderSpotDiffuseLightingZ" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                       TickFrequency="0.1" TickPlacement="Inline" Maximum="250" Minimum="0" StepFrequency="0.1"
+                       Value="{x:Bind GetSpotDiffuseLightingZ(SpotDiffuseLightingZ), BindBack=SetSpotDiffuseLightingZ, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0" Foreground="Aqua">
+                            X and Y-Axis : From mouse
+                        </TextBlock>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Scale Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbScaleModeSpotDiffuse" Margin ="10, -5, 0, 0" VerticalAlignment="Top" Height="40"
+                                  SelectedIndex="0" SelectionChanged="cmbScaleModeSpotDiffuse_SelectionChanged">
+                            <ComboBoxItem Content="Nearest Neighbor"/>
+                            <ComboBoxItem Content="Linear"/>
+                            <ComboBoxItem Content="Cubic"/>
+                            <ComboBoxItem Content="Multi Sample Linear"/>
+                            <ComboBoxItem Content="Anisotropic"/>
+                            <ComboBoxItem Content="High Quality Cubic"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Diffuse Constant :
+                        </TextBlock>
+                        <Slider x:Name="sliderSpotDiffuseLightingDiffuseConstant" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+              TickFrequency="0.01" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01"
+              Value="{x:Bind GetSpotDiffuseLightingDiffuseConstant(SpotDiffuseLightingDiffuseConstant), BindBack=SetSpotDiffuseLightingDiffuseConstant, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Surface Scale :
+                        </TextBlock>
+                        <Slider x:Name="sliderSpotDiffuseLightingSurfaceScale" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+              TickFrequency="0.01" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01" SnapsTo="Ticks"
+              Value="{x:Bind GetSpotDiffuseLightingSurfaceScale(SpotDiffuseLightingSurfaceScale), BindBack=SetSpotDiffuseLightingSurfaceScale, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Focus :
+                        </TextBlock>
+                        <Slider x:Name="sliderSpotDiffuseLightingFocus" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+              TickFrequency="1" TickPlacement="Inline" Maximum="200" Minimum="0" StepFrequency="1"
+              Value="{x:Bind GetSpotDiffuseLightingFocus(SpotDiffuseLightingFocus), BindBack=SetSpotDiffuseLightingFocus, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                   Limiting Cone Angle :
+                        </TextBlock>
+                        <Slider x:Name="sliderSpotDiffuseLightingLimitingConeAngle" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+              TickFrequency="0.01" TickPlacement="Inline" Maximum="90" Minimum="0" StepFrequency="0.01" SnapsTo="Ticks"
+              Value="{x:Bind GetSpotDiffuseLightingLimitingConeAngle(SpotDiffuseLightingLimitingConeAngle), BindBack=SetSpotDiffuseLightingLimitingConeAngle, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+
+                    <Viewbox MaxWidth="400" MaxHeight="250" Stretch="Uniform" Margin="10, 10, 0, -20">
+                        <ColorPicker x:Name="cpSpotDiffuse"
+                   ColorSpectrumShape="Ring"
+                   IsColorPreviewVisible="True"
+                   IsColorChannelTextInputVisible="True"
+                   IsHexInputVisible="True"
+                   IsAlphaTextInputVisible="False"
+                   IsAlphaSliderVisible ="False"
+                   Orientation="Horizontal"
+                   Color="{x:Bind GetSpotDiffuseColor(SpotDiffuseColor), BindBack=SetSpotDiffuseColor, Mode=TwoWay}"/>
+                    </Viewbox>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectSpotSpecularLighting" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                      Z-Axis :
+                        </TextBlock>
+                        <Slider x:Name="sliderSpotSpecularLightingZ" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                 TickFrequency="0.1" TickPlacement="Inline" Maximum="250" Minimum="0" StepFrequency="0.1"
+                 Value="{x:Bind GetSpotSpecularLightingZ(SpotSpecularLightingZ), BindBack=SetSpotSpecularLightingZ, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0" Foreground="Aqua">
+                      X and Y-Axis : From mouse
+                        </TextBlock>
+                        <TextBlock Margin="10, 3, 0, 0">
+                      Scale Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbScaleModeSpotSpecular" Margin ="10, -5, 0, 0" VerticalAlignment="Top" Height="40"
+                            SelectedIndex="0" SelectionChanged="cmbScaleModeSpotSpecular_SelectionChanged">
+                            <ComboBoxItem Content="Nearest Neighbor"/>
+                            <ComboBoxItem Content="Linear"/>
+                            <ComboBoxItem Content="Cubic"/>
+                            <ComboBoxItem Content="Multi Sample Linear"/>
+                            <ComboBoxItem Content="Anisotropic"/>
+                            <ComboBoxItem Content="High Quality Cubic"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Diffuse Constant :
+                        </TextBlock>
+                        <Slider x:Name="sliderSpotSpecularLightingSpecularConstant" Height="32" Width="150" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+        TickFrequency="0.01" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01"
+        Value="{x:Bind GetSpotSpecularLightingSpecularConstant(SpotSpecularLightingSpecularConstant), BindBack=SetSpotSpecularLightingSpecularConstant, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Surface Scale :
+                        </TextBlock>
+                        <Slider x:Name="sliderSpotSpecularLightingSurfaceScale" Height="32" Width="150" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+        TickFrequency="0.01" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01" SnapsTo="Ticks"
+        Value="{x:Bind GetSpotSpecularLightingSurfaceScale(SpotSpecularLightingSurfaceScale), BindBack=SetSpotSpecularLightingSurfaceScale, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Specular Exponent :
+                        </TextBlock>
+                        <Slider x:Name="sliderSpotSpecularLightingSpecularExponent" Height="32" Width="150" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+         TickFrequency="0.1" TickPlacement="Inline" Maximum="128" Minimum="1" StepFrequency="0.1" SnapsTo="Ticks"
+         Value="{x:Bind GetSpotSpecularLightingSpecularExponent(SpotSpecularLightingSpecularExponent), BindBack=SetSpotSpecularLightingSpecularExponent, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Focus :
+                        </TextBlock>
+                        <Slider x:Name="sliderSpotSpecularLightingFocus" Height="32" Width="250" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+        TickFrequency="1" TickPlacement="Inline" Maximum="200" Minimum="0" StepFrequency="1"
+        Value="{x:Bind GetSpotSpecularLightingFocus(SpotSpecularLightingFocus), BindBack=SetSpotSpecularLightingFocus, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Limiting Cone Angle :
+                        </TextBlock>
+                        <Slider x:Name="sliderSpotSpecularLightingLimitingConeAngle" Height="32" Width="250" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+        TickFrequency="0.01" TickPlacement="Inline" Maximum="90" Minimum="0" StepFrequency="0.01" SnapsTo="Ticks"
+        Value="{x:Bind GetSpotSpecularLightingLimitingConeAngle(SpotSpecularLightingLimitingConeAngle), BindBack=SetSpotSpecularLightingLimitingConeAngle, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+
+                    <Viewbox MaxWidth="400" MaxHeight="250" Stretch="Uniform" Margin="10, 10, 0, -20">
+                        <ColorPicker x:Name="cpSpotSpecular"
+                                     ColorSpectrumShape="Ring"
+                                     IsColorPreviewVisible="True"
+                                     IsColorChannelTextInputVisible="True"
+                                     IsHexInputVisible="True"
+                                     IsAlphaTextInputVisible="False"
+                                     IsAlphaSliderVisible ="False"
+                                     Orientation="Horizontal"
+                                     Color="{x:Bind GetSpotSpecularColor(SpotSpecularColor), BindBack=SetSpotSpecularColor, Mode=TwoWay}"/>
+                    </Viewbox>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectBrightness" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Rectangle Margin="10, 0, 10, 0" Fill="White" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                            <TextBlock Margin="10, 3, 0, 0">
+                            Point X :
+                            </TextBlock>
+                            <Slider x:Name="sliderBrightnessWhitePointX" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                         TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                         Value="{x:Bind GetBrightnessWhitePointX(BrightnessWhitePointX), BindBack=SetBrightnessWhitePointX, Mode=TwoWay}">
+                            </Slider>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                            <TextBlock Margin="10, 3, 0, 0">
+                             Point Y :
+                            </TextBlock>
+                            <Slider x:Name="sliderBrightnessWhitePointY" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                         TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                         Value="{x:Bind GetBrightnessWhitePointY(BrightnessWhitePointY), BindBack=SetBrightnessWhitePointY, Mode=TwoWay}">
+                            </Slider>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Rectangle Margin="10, 0, 10, 0" Fill="Black" Width="20" Height="20" Stroke="Gray" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                            <TextBlock Margin="10, 3, 0, 0">
+                                Point X :
+                            </TextBlock>
+                            <Slider x:Name="sliderBrightnessBlackPointX" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                                    TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                                    Value="{x:Bind GetBrightnessBlackPointX(BrightnessBlackPointX), BindBack=SetBrightnessBlackPointX, Mode=TwoWay}">
+                            </Slider>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                            <TextBlock Margin="10, 3, 0, 0">
+                                Point Y :
+                            </TextBlock>
+                            <Slider x:Name="sliderBrightnessBlackPointY" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                                    TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                                    Value="{x:Bind GetBrightnessBlackPointY(BrightnessBlackPointY), BindBack=SetBrightnessBlackPointY, Mode=TwoWay}">
+                            </Slider>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectContrast" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <TextBlock Margin="10, 10, 0, 0">
+                    Contrast :
+                </TextBlock>
+                <Slider x:Name="sliderContrast" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 5, 10, 0"
+                        TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="-1" StepFrequency="0.01" SnapsTo="Ticks"
+                        Value="{x:Bind GetContrast(Contrast), BindBack=SetContrast, Mode=TwoWay}">
+                </Slider>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectExposure" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <TextBlock Margin="10, 10, 0, 0">
+                    Exposure :
+                </TextBlock>
+                <Slider x:Name="sliderExposure" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 5, 10, 0"
+                        TickFrequency="0.01" TickPlacement="Inline" Maximum="2" Minimum="-2" StepFrequency="0.01" SnapsTo="Ticks"
+                        Value="{x:Bind GetExposure(Exposure), BindBack=SetExposure, Mode=TwoWay}">
+                </Slider>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectGrayscale" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectHighlightsAndShadows" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Highlights :
+                        </TextBlock>
+                        <Slider x:Name="sliderHighlightsAndShadowsHighlights" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                     TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="-1" StepFrequency="0.01"
+                     Value="{x:Bind GetHighlightsAndShadowsHighlights(HighlightsAndShadowsHighlights), BindBack=SetHighlightsAndShadowsHighlights, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Shadows :
+                        </TextBlock>
+                        <Slider x:Name="sliderHighlightsAndShadowsShadows" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                     TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="-1" StepFrequency="0.01" SnapsTo="Ticks"
+                     Value="{x:Bind GetHighlightsAndShadowsShadows(HighlightsAndShadowsShadows), BindBack=SetHighlightsAndShadowsShadows, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Clarity :
+                        </TextBlock>
+                        <Slider x:Name="sliderHighlightsAndShadowsClarity" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                     TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="-1" StepFrequency="0.01" SnapsTo="Ticks"
+                     Value="{x:Bind GetHighlightsAndShadowsClarity(HighlightsAndShadowsClarity), BindBack=SetHighlightsAndShadowsClarity, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Mask Blur Radius :
+                        </TextBlock>
+                        <Slider x:Name="sliderHighlightsAndShadowsMaskBlurRadius" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                     TickFrequency="0.01" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01"
+                     Value="{x:Bind GetHighlightsAndShadowsMaskBlurRadius(HighlightsAndShadowsMaskBlurRadius), BindBack=SetHighlightsAndShadowsMaskBlurRadius, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Input Gamma :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbInputGammaHighlightsAndShadows" Margin ="10, -5, 0, 0" VerticalAlignment="Top" Height="40"
+                       SelectedIndex="0" SelectionChanged="cmbInputGammaHighlightsAndShadows_SelectionChanged">
+                            <ComboBoxItem Content="Linear"/>
+                            <ComboBoxItem Content="sRGB "/>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectInvert" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectSepia" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <TextBlock Margin="10, 10, 0, 0">
+                    Intensity :
+                </TextBlock>
+                <Slider x:Name="sliderSepiaIntensity" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 5, 10, 0"
+                        TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01" SnapsTo="Ticks"
+                        Value="{x:Bind GetSepiaIntensity(SepiaIntensity), BindBack=SetSepiaIntensity, Mode=TwoWay}">
+                </Slider>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectSharpen" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 10, 0, 0" >
+                    <TextBlock Margin="10, 3, 0, 0">
+                            Sharpness :
+                    </TextBlock>
+                    <Slider x:Name="sliderSharpenSharpness" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                     TickFrequency="0.01" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01"
+                     Value="{x:Bind GetSharpenSharpness(SharpenSharpness), BindBack=SetSharpenSharpness, Mode=TwoWay}">
+                    </Slider>
+                    <TextBlock Margin="10, 3, 0, 0">
+                            Threshold :
+                    </TextBlock>
+                    <Slider x:Name="sliderSharpenThreshold" Height="32" Width="250" Orientation="Horizontal" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                     TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01" SnapsTo="Ticks"
+                     Value="{x:Bind GetSharpenThreshold(SharpenThreshold), BindBack=SetSharpenThreshold, Mode=TwoWay}">
+                    </Slider>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectStraighten" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 10, 0, 0" >
+                    <TextBlock Margin="10, 3, 0, 0">
+                           Angle :
+                    </TextBlock>
+                    <Slider x:Name="sliderStraightenAngle" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                    TickFrequency="0.01" TickPlacement="Inline" Maximum="45" Minimum="-45" StepFrequency="0.01"
+                    Value="{x:Bind GetStraightenAngle(StraightenAngle), BindBack=SetStraightenAngle, Mode=TwoWay}">
+                    </Slider>
+                    <TextBlock Margin="10, 3, 0, 0">
+                            Scale Mode :
+                    </TextBlock>
+                    <ComboBox x:Name="cmbScaleModeStraighten" Margin ="10, -5, 0, 0" VerticalAlignment="Top" Height="40"
+                            SelectedIndex="0" SelectionChanged="cmbScaleModeStraighten_SelectionChanged">
+                        <ComboBoxItem Content="Nearest Neighbor"/>
+                        <ComboBoxItem Content="Linear"/>
+                        <ComboBoxItem Content="Cubic"/>
+                        <ComboBoxItem Content="Multi Sample Linear"/>
+                        <ComboBoxItem Content="Anisotropic"/>
+                        <ComboBoxItem Content="High Quality Cubic"/>
+                    </ComboBox>
+                    <TextBlock Margin="10, 3, 0, 0">
+                        Maintain Size :
+                    </TextBlock>
+                    <ToggleSwitch x:Name="tsStraightenMaintainSize" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, -5, 0, 0"
+                                  OffContent="No" OnContent="Yes" Toggled="tsStraightenMaintainSize_Toggled"  IsOn="True"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectTemperatureAndTint" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 10, 0, 0" >
+                    <TextBlock Margin="10, 3, 0, 0">
+                        Temperature :
+                    </TextBlock>
+                    <Slider x:Name="sliderTemperatureAndTintTemperature" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                            TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="-1" StepFrequency="0.01"
+                            Value="{x:Bind GetTemperatureAndTintTemperature(TemperatureAndTintTemperature), BindBack=SetTemperatureAndTintTemperature, Mode=TwoWay}">
+                    </Slider>
+                    <TextBlock Margin="10, 3, 0, 0">
+                        Tint :
+                    </TextBlock>
+                    <Slider x:Name="sliderTemperatureAndTintTint" Height="32" Width="250" Orientation="Horizontal" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                            TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="-1" StepFrequency="0.01" SnapsTo="Ticks"
+                            Value="{x:Bind GetTemperatureAndTintTint(TemperatureAndTintTint), BindBack=SetTemperatureAndTintTint, Mode=TwoWay}">
+                    </Slider>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectVignette" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Transition Size :
+                        </TextBlock>
+                        <Slider x:Name="sliderVignetteTransitionSize" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                        TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                        Value="{x:Bind GetVignetteTransitionSize(VignetteTransitionSize), BindBack=SetVignetteTransitionSize, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Strength :
+                        </TextBlock>
+                        <Slider x:Name="sliderVignetteStrength" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                        TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01" SnapsTo="Ticks"
+                        Value="{x:Bind GetVignetteStrength(VignetteStrength), BindBack=SetVignetteStrength, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <Viewbox MaxWidth="400" MaxHeight="250" Stretch="Uniform" Margin="10, 10, 0, -20">
+                        <ColorPicker x:Name="cpVignette"
+                             ColorSpectrumShape="Ring"
+                             IsColorPreviewVisible="True"
+                             IsColorChannelTextInputVisible="True"
+                             IsHexInputVisible="True"
+                             IsAlphaTextInputVisible="False"
+                             IsAlphaSliderVisible ="False"
+                             Orientation="Horizontal"
+                             Color="{x:Bind GetVignetteColor(VignetteColor), BindBack=SetVignetteColor, Mode=TwoWay}"/>
+                    </Viewbox>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectAffineTransform" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nbAffineTransform1" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1">
+                        </NumberBox>
+                        <NumberBox x:Name="nbAffineTransform2" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nbAffineTransform3" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1">
+                        </NumberBox>
+                        <NumberBox x:Name="nbAffineTransform4" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nbAffineTransform5" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1">
+                        </NumberBox>
+                        <NumberBox x:Name="nbAffineTransform6" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1">
+                        </NumberBox>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 0, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 0, 0, 0">
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Border Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbBorderModeAffineTransform" Margin ="10, 2, 0, 0" Height="40"
+                                  SelectedIndex="0" SelectionChanged="cmbBorderModeAffineTransform_SelectionChanged">
+                            <ComboBoxItem Content="Soft"/>
+                            <ComboBoxItem Content="Hard"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 0, 0, 0">
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Interpolation Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbInterpolationModeAffineTransform" Margin ="10, 2, 0, 0" Height="40"
+                                  SelectedIndex="0" SelectionChanged="cmbInterpolationModeAffineTransform_SelectionChanged">
+                            <ComboBoxItem Content="Nearest Neighbor"/>
+                            <ComboBoxItem Content="Linear"/>
+                            <ComboBoxItem Content="Cubic"/>
+                            <ComboBoxItem Content="Multi Sample Linear"/>
+                            <ComboBoxItem Content="Anisotropic"/>
+                            <ComboBoxItem Content="High Quality Cubic"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 0, 0, 0">
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Sharpness :
+                        </TextBlock>
+                        <Slider x:Name="sliderAffineTransformSharpness" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 6, 10, 0"
+                                TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                                Value="{x:Bind GetAffineTransformSharpness(AffineTransformSharpness), BindBack=SetAffineTransformSharpness, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                </StackPanel>
+                <Button x:Name="btnApplyAffineTransform" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 10, 0, 0" Width="56" Height="34"
+                        Click="btnApplyAffineTransform_Click" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                        FontSize="14" Padding="0, 0, 0, 0" Foreground="LimeGreen" Content ="Apply">
+                </Button>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectTransform" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nbTransform1" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTransform2" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTransform3" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTransform4" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nbTransform5" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTransform6" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTransform7" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTransform8" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nbTransform9" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTransform10" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTransform11" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTransform12" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <NumberBox x:Name="nbTransform13" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTransform14" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTransform15" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTransform16" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32">
+                        </NumberBox>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 0, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 0, 0, 0">
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Border Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbBorderModeTransform" Margin ="10, 2, 0, 0" Height="40"
+                                  SelectedIndex="0" SelectionChanged="cmbBorderModeTransform_SelectionChanged">
+                            <ComboBoxItem Content="Soft"/>
+                            <ComboBoxItem Content="Hard"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 0, 0, 0">
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Interpolation Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbInterpolationModeTransform" Margin ="10, 2, 0, 0" Height="40"
+                                  SelectedIndex="0" SelectionChanged="cmbInterpolationModeTransform_SelectionChanged">
+                            <ComboBoxItem Content="Nearest Neighbor"/>
+                            <ComboBoxItem Content="Linear"/>
+                            <ComboBoxItem Content="Cubic"/>
+                            <ComboBoxItem Content="Multi Sample Linear"/>
+                            <ComboBoxItem Content="Anisotropic"/>
+                            <ComboBoxItem Content="High Quality Cubic"/>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+                <Button x:Name="btnApplyTransform" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 10, 0, 0" Width="56" Height="34"
+                        Click="btnApplyTransform_Click" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                        FontSize="14" Padding="0, 0, 0, 0" Foreground="LimeGreen" Content ="Apply">
+                </Button>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectPerspectiveTransform" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Depth :
+                        </TextBlock>
+                        <NumberBox x:Name="nbPerspectiveTransformDepth" Minimum="0" Maximum="10000" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Perspective Origin X :
+                        </TextBlock>
+                        <NumberBox x:Name="nbPerspectiveTransformPerspectiveOriginX" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Perspective Origin Y :
+                        </TextBlock>
+                        <NumberBox x:Name="nbPerspectiveTransformPerspectiveOriginY" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Local Offset X :
+                        </TextBlock>
+                        <NumberBox x:Name="nbPerspectiveTransformLocalOffsetX" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Local Offset Y :
+                        </TextBlock>
+                        <NumberBox x:Name="nbPerspectiveTransformLocalOffsetY" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Local Offset Z :
+                        </TextBlock>
+                        <NumberBox x:Name="nbPerspectiveTransformLocalOffsetZ" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Global Offset X :
+                        </TextBlock>
+                        <NumberBox x:Name="nbPerspectiveTransformGlobalOffsetX" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Global Offset Y :
+                        </TextBlock>
+                        <NumberBox x:Name="nbPerspectiveTransformGlobalOffsetY" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Global Offset Z :
+                        </TextBlock>
+                        <NumberBox x:Name="nbPerspectiveTransformGlobalOffsetZ" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Rotation Origin X :
+                        </TextBlock>
+                        <NumberBox x:Name="nbPerspectiveTransformRotationOriginX" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Rotation Origin Y :
+                        </TextBlock>
+                        <NumberBox x:Name="nbPerspectiveTransformRotationOriginY" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Rotation Origin Z :
+                        </TextBlock>
+                        <NumberBox x:Name="nbPerspectiveTransformRotationOriginZ" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Rotation Angle X :
+                        </TextBlock>
+                        <Slider x:Name="sliderPerspectiveTransformRotationAngleX" Height="32" Width="150" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 6, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="180" Minimum="-180" StepFrequency="0.1"
+                                Value="{x:Bind GetPerspectiveTransformRotationAngleX(PerspectiveTransformRotationAngleX), BindBack=SetPerspectiveTransformRotationAngleX, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Rotation Angle Y :
+                        </TextBlock>
+                        <Slider x:Name="sliderPerspectiveTransformRotationAngleY" Height="32" Width="150" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 6, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="180" Minimum="-180" StepFrequency="0.1"
+                                Value="{x:Bind GetPerspectiveTransformRotationAngleY(PerspectiveTransformRotationAngleY), BindBack=SetPerspectiveTransformRotationAngleY, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Rotation Angle Z :
+                        </TextBlock>
+                        <Slider x:Name="sliderPerspectiveTransformRotationAngleZ" Height="32" Width="150" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 6, 10, 0"
+                                TickFrequency="0.1" TickPlacement="Inline" Maximum="180" Minimum="-180" StepFrequency="0.1"
+                                Value="{x:Bind GetPerspectiveTransformRotationAngleZ(PerspectiveTransformRotationAngleZ), BindBack=SetPerspectiveTransformRotationAngleZ, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 0, 0, 0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 0, 0, 0">
+                            <TextBlock Margin="10, 10, 0, 0">
+                            Border Mode :
+                            </TextBlock>
+                            <ComboBox x:Name="cmbBorderModePerspectiveTransform" Margin ="10, 2, 0, 0" Height="40"
+                                  SelectedIndex="0" SelectionChanged="cmbBorderModePerspectiveTransform_SelectionChanged">
+                                <ComboBoxItem Content="Soft"/>
+                                <ComboBoxItem Content="Hard"/>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 0, 0, 0">
+                            <TextBlock Margin="10, 10, 0, 0">
+                            Interpolation Mode :
+                            </TextBlock>
+                            <ComboBox x:Name="cmbInterpolationModePerspectiveTransform" Margin ="10, 2, 0, 0" Height="40"
+                                  SelectedIndex="0" SelectionChanged="cmbInterpolationModePerspectiveTransform_SelectionChanged">
+                                <ComboBoxItem Content="Nearest Neighbor"/>
+                                <ComboBoxItem Content="Linear"/>
+                                <ComboBoxItem Content="Cubic"/>
+                                <ComboBoxItem Content="Multi Sample Linear"/>
+                                <ComboBoxItem Content="Anisotropic"/>
+                                <ComboBoxItem Content="High Quality Cubic"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <Button x:Name="btnApplyPerspectiveTransform" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 10, 0, 0" Width="56" Height="34"
+                        Click="btnApplyPerspectiveTransform_Click" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                        FontSize="14" Padding="0, 0, 0, 0" Foreground="LimeGreen" Content ="Apply">
+                </Button>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectAtlas" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Input Rect :
+                        </TextBlock>
+                        <NumberBox x:Name="nbAtlasInputRect1" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <NumberBox x:Name="nbAtlasInputRect2" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <NumberBox x:Name="nbAtlasInputRect3" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <NumberBox x:Name="nbAtlasInputRect4" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                    </StackPanel>
+                </StackPanel>
+                <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Input Padding Rect :
+                        </TextBlock>
+                        <NumberBox x:Name="nbAtlasInputPaddingRect1" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <NumberBox x:Name="nbAtlasInputPaddingRect2" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <NumberBox x:Name="nbAtlasInputPaddingRect3" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <NumberBox x:Name="nbAtlasInputPaddingRect4" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                    </StackPanel>
+                </StackPanel>-->
+                <Button x:Name="btnApplyAtlas" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 10, 0, 0" Width="56" Height="34"
+                        Click="btnApplyAtlas_Click" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                        FontSize="14" Padding="0, 0, 0, 0" Foreground="LimeGreen" Content ="Apply">
+                </Button>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectBorder" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Edge Mode X :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbBorderEdgeModeX" Margin ="10, -5, 0, 0" VerticalAlignment="Top" Height="40"
+                                  SelectedIndex="0" SelectionChanged="cmbBorderEdgeModeX_SelectionChanged">
+                            <ComboBoxItem Content="Clamp"/>
+                            <ComboBoxItem Content="Wrap"/>
+                            <ComboBoxItem Content="Mirror"/>
+                        </ComboBox>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Edge Mode Y :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbBorderEdgeModeY" Margin ="10, -5, 0, 0" VerticalAlignment="Top" Height="40"
+                                  SelectedIndex="0" SelectionChanged="cmbBorderEdgeModeY_SelectionChanged">
+                            <ComboBoxItem Content="Clamp"/>
+                            <ComboBoxItem Content="Wrap"/>
+                            <ComboBoxItem Content="Mirror"/>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectCrop" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Rect :
+                        </TextBlock>
+                        <NumberBox x:Name="nbCropRect1" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, -8, 0, 0">
+                        </NumberBox>
+                        <NumberBox x:Name="nbCropRect2" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, -8, 0, 0">
+                        </NumberBox>
+                        <NumberBox x:Name="nbCropRect3" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, -8, 0, 0">
+                        </NumberBox>
+                        <NumberBox x:Name="nbCropRect4" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, -8, 0, 0">
+                        </NumberBox>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Border Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbBorderModeCrop" Margin ="10, -5, 0, 0" Height="40"
+                                  SelectedIndex="0" SelectionChanged="cmbBorderModeCrop_SelectionChanged">
+                            <ComboBoxItem Content="Soft"/>
+                            <ComboBoxItem Content="Hard"/>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+
+                <Button x:Name="btnApplyCrop" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 13, 0, 0" Width="56" Height="34"
+                        Click="btnApplyCrop_Click" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                        FontSize="14" Padding="0, 0, 0, 0" Foreground="LimeGreen" Content ="Apply">
+                </Button>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectScale" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 10, 0, 0">
+     							Scale X :
+                        </TextBlock>
+                        <Slider x:Name="sliderScaleScaleX" Height="32" Width="250" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 6, 10, 0"
+         					TickFrequency="0.01" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01"
+        					Value="{x:Bind GetScaleScaleX(ScaleScaleX), BindBack=SetScaleScaleX, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 10, 0, 0">
+     							Scale Y :
+                        </TextBlock>
+                        <Slider x:Name="sliderScaleScaleY" Height="32" Width="250" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 6, 10, 0"
+         					TickFrequency="0.1" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="0.01"
+        					Value="{x:Bind GetScaleScaleY(ScaleScaleY), BindBack=SetScaleScaleY, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 10, 0, 0">
+     							Center Point X :
+                        </TextBlock>
+                        <NumberBox x:Name="nbScaleCenterPointX" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <TextBlock Margin="10, 10, 0, 0">
+     							Center Point Y :
+                        </TextBlock>
+                        <NumberBox x:Name="nbScaleCenterPointY" Minimum="-1000" Maximum="1000" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <TextBlock Margin="10, 10, 0, 0">
+     							Sharpness (HQ Cubic):
+                        </TextBlock>
+                        <Slider x:Name="sliderScaleSharpness" Height="32" Width="100" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 6, 10, 0"
+         					TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+        					Value="{x:Bind GetScaleSharpness(ScaleSharpness), BindBack=SetScaleSharpness, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 0, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 0, 0, 0">
+                        <TextBlock Margin="10, 10, 0, 0">
+                     Border Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbBorderModeScale" Margin ="10, 2, 0, 0" Height="40"
+                           SelectedIndex="0" SelectionChanged="cmbBorderModeScale_SelectionChanged">
+                            <ComboBoxItem Content="Soft"/>
+                            <ComboBoxItem Content="Hard"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 0, 0, 0">
+                        <TextBlock Margin="10, 10, 0, 0">
+                     Interpolation Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbInterpolationModeScale" Margin ="10, 2, 0, 0" Height="40"
+                           SelectedIndex="0" SelectionChanged="cmbInterpolationModeScale_SelectionChanged">
+                            <ComboBoxItem Content="Nearest Neighbor"/>
+                            <ComboBoxItem Content="Linear"/>
+                            <ComboBoxItem Content="Cubic"/>
+                            <ComboBoxItem Content="Multi Sample Linear"/>
+                            <ComboBoxItem Content="Anisotropic"/>
+                            <ComboBoxItem Content="High Quality Cubic"/>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+                <Button x:Name="btnApplyScale" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 10, 0, 0" Width="56" Height="34"
+                 Click="btnApplyScale_Click" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                 FontSize="14" Padding="0, 0, 0, 0" Foreground="LimeGreen" Content ="Apply">
+                </Button>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectTile" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Rect :
+                        </TextBlock>
+                        <NumberBox x:Name="nbTileRect1" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTileRect2" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTileRect3" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <NumberBox x:Name="nbTileRect4" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                    </StackPanel>
+                </StackPanel>
+
+                <Button x:Name="btnApplyTile" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 13, 0, 0" Width="56" Height="34"
+              Click="btnApplyTile_Click" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+              FontSize="14" Padding="0, 0, 0, 0" Foreground="LimeGreen" Content ="Apply">
+                </Button>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectChromaKey" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Tolerance :
+                        </TextBlock>
+                        <Slider x:Name="sliderChromaKeyTolerance" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                     TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                     Value="{x:Bind GetChromaKeyTolerance(ChromaKeyTolerance), BindBack=SetChromaKeyTolerance, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="20, 3, 0, 0">
+                            Invert Alpha :
+                        </TextBlock>
+                        <ToggleSwitch x:Name="tsChromaKeyInvertAlpha" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, -5, 0, 0"
+                                  OffContent="No" OnContent="Yes" Toggled="tsChromaKeyInvertAlpha_Toggled" IsOn="False"/>
+                        <TextBlock Margin="0, 3, 0, 0">
+                            Feather :
+                        </TextBlock>
+                        <ToggleSwitch x:Name="tsChromaKeyFeather" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, -5, 0, 0"
+                                  OffContent="No" OnContent="Yes" Toggled="tsChromaKeyFeather_Toggled" IsOn="False"/>
+                    </StackPanel>
+                    <Viewbox MaxWidth="400" MaxHeight="250" Stretch="Uniform" Margin="10, 10, 0, -20">
+                        <ColorPicker x:Name="cpChromaKey"
+                          ColorSpectrumShape="Ring"
+                          IsColorPreviewVisible="True"
+                          IsColorChannelTextInputVisible="True"
+                          IsHexInputVisible="True"
+                          IsAlphaTextInputVisible="False"
+                          IsAlphaSliderVisible ="False"
+                          Orientation="Horizontal"
+                          Color="{x:Bind GetChromaKeyColor(ChromaKeyColor), BindBack=SetChromaKeyColor, Mode=TwoWay}"/>
+                    </Viewbox>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectLuminanceToAlpha" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <Viewbox MaxWidth="400" MaxHeight="250" Stretch="Uniform" Margin="10, 10, 0, -20">
+                    <ColorPicker x:Name="cpLuminanceToAlpha"
+                   ColorSpectrumShape="Ring"
+                   IsColorPreviewVisible="True"
+                   IsColorChannelTextInputVisible="True"
+                   IsHexInputVisible="True"
+                   IsAlphaTextInputVisible="False"
+                   IsAlphaSliderVisible ="False"
+                   Orientation="Horizontal"
+                   Color="{x:Bind GetLuminanceToAlphaColor(LuminanceToAlphaColor), BindBack=SetLuminanceToAlphaColor, Mode=TwoWay}"/>
+                </Viewbox>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectOpacity" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Opacity :
+                        </TextBlock>
+                        <Slider x:Name="sliderOpacityOpacity" Height="32" Width="400" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 10, 0"
+                TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                Value="{x:Bind GetOpacityOpacity(OpacityOpacity), BindBack=SetOpacityOpacity, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectAlphaMask" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Mask Image (resized to original image) :
+                        </TextBlock>
+                        <Border Background="Gray" Margin ="10, 10, 0, 0">
+                            <Image x:Name="imgMask" HorizontalAlignment="Center" Margin="0, 0, 0, 0" Width ="200" Height = "200" Stretch="Uniform"                               
+                               Source="Assets/Black_Star.png">
+                            </Image>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectArithmeticComposite" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Coefficients :
+                        </TextBlock>
+                        <NumberBox x:Name="nbC1" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <NumberBox x:Name="nbC2" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <NumberBox x:Name="nbC3" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <NumberBox x:Name="nbC4" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Second Image (resized to original image) :
+                        </TextBlock>
+                        <Border Background="Black" Margin ="10, 10, 0, -30">
+                            <Image x:Name="img2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 0, 0, 0" Width ="200" Height = "200" Stretch="Uniform"
+                                   Source="Assets/Butterfly_RedFlower.jpg">
+                            </Image>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+
+                <Button x:Name="btnApplyArithmeticComposite" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 13, 0, 0" Width="56" Height="34"
+                        Click="btnApplyArithmeticComposite_Click" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                        FontSize="14" Padding="0, 0, 0, 0" Foreground="LimeGreen" Content ="Apply">
+                </Button>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectBlend" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 0, 0, 0" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                        Blend Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbBlendModeBlend" Margin ="10, -5, 0, 0" VerticalAlignment="Top" Height="40"
+                              SelectedIndex="0" SelectionChanged="cmbBlendModeBlend_SelectionChanged">
+                            <ComboBoxItem Content="Darken"/>
+                            <ComboBoxItem Content="Multiply"/>
+                            <ComboBoxItem Content="Color Burn"/>
+                            <ComboBoxItem Content="Linear Burn"/>
+                            <ComboBoxItem Content="Darker Color"/>
+                            <ComboBoxItem Content="Lighten"/>
+                            <ComboBoxItem Content="Screen"/>
+                            <ComboBoxItem Content="Color Dodge"/>
+                            <ComboBoxItem Content="Linear Dodge"/>
+                            <ComboBoxItem Content="Lighter Color"/>
+                            <ComboBoxItem Content="Overlay"/>
+                            <ComboBoxItem Content="Soft Light"/>
+                            <ComboBoxItem Content="Hard Light"/>
+                            <ComboBoxItem Content="Vivid Light"/>
+                            <ComboBoxItem Content="Linear Light"/>
+                            <ComboBoxItem Content="Pin Light"/>
+                            <ComboBoxItem Content="Hard Mix"/>
+                            <ComboBoxItem Content="Difference"/>
+                            <ComboBoxItem Content="Exclusion"/>
+                            <ComboBoxItem Content="Hue"/>
+                            <ComboBoxItem Content="Saturation"/>
+                            <ComboBoxItem Content="Color"/>
+                            <ComboBoxItem Content="Luminosity"/>
+                            <ComboBoxItem Content="Dissolve"/>
+                            <ComboBoxItem Content="Subtract"/>
+                            <ComboBoxItem Content="Division"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Second Image (resized to original image) :
+                        </TextBlock>
+                        <Border Background="Black" Margin ="10, 10, 0, -30">
+                            <Image x:Name="img2b" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 0, 0, 0" Width ="200" Height = "200" Stretch="Uniform"
+                                   Source="Assets/Butterfly_RedFlower.jpg">
+                            </Image>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectComposite" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 0, 0, 0" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Composite Mode :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbCompositeModeComposite" Margin ="10, -5, 0, 0" VerticalAlignment="Top" Height="40"
+                         SelectedIndex="0" SelectionChanged="cmbCompositeModeComposite_SelectionChanged">
+                            <ComboBoxItem Content="Source Over"/>
+                            <ComboBoxItem Content="Destination Over"/>
+                            <ComboBoxItem Content="Source In"/>
+                            <ComboBoxItem Content="Destination In"/>
+                            <ComboBoxItem Content="Source Out"/>
+                            <ComboBoxItem Content="Destination Out"/>
+                            <ComboBoxItem Content="Source Atop"/>
+                            <ComboBoxItem Content="Destination Atop"/>
+                            <ComboBoxItem Content="XOR"/>
+                            <ComboBoxItem Content="Plus"/>
+                            <ComboBoxItem Content="Source Copy"/>
+                            <ComboBoxItem Content="Bounded Source Copy"/>
+                            <ComboBoxItem Content="Mask Invert"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                       Second Image :
+                        </TextBlock>
+                        <Border Background="Black" Margin ="10, 10, 0, -30">
+                            <Image x:Name="img2Transparent" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 0, 0, 0" Width ="200" Height = "200" Stretch="Uniform"
+                              Source="Assets/Flying_Parrot.png">
+                            </Image>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectCrossFade" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 0, 0, 0" >
+                        <TextBlock Margin="10, 10, 0, 0">
+    							Weight :
+                        </TextBlock>
+                        <Slider x:Name="sliderCrossFadeWeight" Height="32" Width="250" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 6, 10, 0"
+  					TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+ 					Value="{x:Bind GetCrossFadeWeight(CrossFadeWeight), BindBack=SetCrossFadeWeight, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Second Image (resized to original image) :
+                        </TextBlock>
+                        <Border Background="Black" Margin ="10, 10, 0, -30">
+                            <Image x:Name="img2c" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 0, 0, 0" Width ="200" Height = "200" Stretch="Uniform"
+                            Source="Assets/Butterfly_RedFlower.jpg">
+                            </Image>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectTurbulence" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Offset X :
+                        </TextBlock>
+                        <NumberBox x:Name="nbTurbulenceOffsetX"  BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0" >
+                        </NumberBox>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Offset Y :
+                        </TextBlock>
+                        <NumberBox x:Name="nbTurbulenceOffsetY" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Size X :
+                        </TextBlock>
+                        <NumberBox x:Name="nbTurbulenceSizeX"  BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                        <TextBlock Margin="10, 3, 0, 0">
+                            Size Y :
+                        </TextBlock>
+                        <NumberBox x:Name="nbTurbulenceSizeY" BorderBrush="Azure" BorderThickness="1" Height ="32" Margin="10, 0, 0, 0">
+                        </NumberBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 0, 0, 0">
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Base Frequency X :
+                        </TextBlock>
+                        <Slider x:Name="sliderTurbulenceBaseFrequencyX" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 6, 10, 0"
+           TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+           Value="{x:Bind GetTurbulenceBaseFrequencyX(TurbulenceBaseFrequencyX), BindBack=SetTurbulenceBaseFrequencyX, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Base Frequency Y :
+                        </TextBlock>
+                        <Slider x:Name="sliderTurbulenceBaseFrequencyY" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 6, 10, 0"
+           TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+           Value="{x:Bind GetTurbulenceBaseFrequencyY(TurbulenceBaseFrequencyY), BindBack=SetTurbulenceBaseFrequencyY, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="0, 0, 0, 0">
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Number of Octaves :
+                        </TextBlock>
+                        <Slider x:Name="sliderTurbulenceNumOctaves" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 6, 10, 0"
+           TickFrequency="1" TickPlacement="Inline" Maximum="10" Minimum="0" StepFrequency="1"
+           Value="{x:Bind GetTurbulenceNumOctaves(TurbulenceNumOctaves), BindBack=SetTurbulenceNumOctaves, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Seed :
+                        </TextBlock>
+                        <Slider x:Name="sliderTurbulenceSeed" Height="32" Width="200" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 6, 10, 0"
+           TickFrequency="0.1" TickPlacement="Inline" Maximum="100" Minimum="-100" StepFrequency="0.1"
+           Value="{x:Bind GetTurbulenceSeed(TurbulenceSeed), BindBack=SetTurbulenceSeed, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Noise :
+                        </TextBlock>
+                        <ComboBox x:Name="cmbNoiseTurbulence" Margin ="10, 2, 0, 0" Height="40"
+                                  SelectedIndex="0" SelectionChanged="cmbNoiseTurbulence_SelectionChanged">
+                            <ComboBoxItem Content="Fractal Sum"/>
+                            <ComboBoxItem Content="Turbulence"/>                          
+                        </ComboBox>
+                        <ToggleSwitch x:Name="tsTurbulenceStitchable" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 0, 0, 0"
+                                      OffContent="Stitching Off" OnContent="Stitching On" Toggled="tsTurbulenceStitchable_Toggled" IsOn="False"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button x:Name="btnApplyTurbulence" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 10, 0, 0" Width="56" Height="34"
+               Click="btnApplyTurbulence_Click" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+               FontSize="14" Padding="0, 0, 0, 0" Foreground="LimeGreen" Content ="Apply">
+                </Button>
+            </StackPanel>
+
+            <StackPanel x:Name="spEffectDisplacementMap" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 10, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 0, 0, 0">
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Scale (Turbulence) :
+                        </TextBlock>
+                        <Slider x:Name="sliderDisplacementMapScale" Height="32" Width="600" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 5, 10, 0"
+                        TickFrequency="1" TickPlacement="Inline" Maximum="5000" Minimum="0" StepFrequency="1" SnapsTo="Ticks"
+                        Value="{x:Bind GetDisplacementMapScale(DisplacementMapScale), BindBack=SetDisplacementMapScale, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin ="0, 0, 0, 0">
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Base Frequency X :
+                        </TextBlock>
+                        <Slider x:Name="sliderTurbulenceBaseFrequencyDMX" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 6, 10, 0"
+                                TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                                Value="{x:Bind GetTurbulenceBaseFrequencyDMX(TurbulenceBaseFrequencyDMX), BindBack=SetTurbulenceBaseFrequencyDMX, Mode=TwoWay}">
+                        </Slider>
+                        <TextBlock Margin="10, 10, 0, 0">
+                            Base Frequency Y :
+                        </TextBlock>
+                        <Slider x:Name="sliderTurbulenceBaseFrequencyDMY" Height="32" Width="300" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10, 6, 10, 0"
+                                TickFrequency="0.01" TickPlacement="Inline" Maximum="1" Minimum="0" StepFrequency="0.01"
+                                Value="{x:Bind GetTurbulenceBaseFrequencyDMY(TurbulenceBaseFrequencyDMY), BindBack=SetTurbulenceBaseFrequencyDMY, Mode=TwoWay}">
+                        </Slider>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="10, 0, 0, 0">
+                        <RadioButtons x:Name="rbChannelX" Header="Channel X" MaxColumns="4"
+                                      SelectedIndex="0"
+                                      SelectionChanged="rbChannelX_SelectionChanged">
+                            <x:String>Alpha</x:String>
+                            <x:String>Red</x:String>
+                            <x:String>Green</x:String>
+                            <x:String>Blue</x:String>
+                        </RadioButtons>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin ="10, 0, 0, 0">
+                        <RadioButtons x:Name="rbChannelY" Header="Channel Y" MaxColumns="4"
+                                      SelectedIndex="0"
+                                      SelectionChanged="rbChannelY_SelectionChanged">
+                            <x:String>Alpha</x:String>
+                            <x:String>Red</x:String>
+                            <x:String>Green</x:String>
+                            <x:String>Blue</x:String>
+                        </RadioButtons>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+        </StackPanel>
+
+        <Button x:Name="btnSave" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 10, 10, 0" Width="36" Height="34"
+                 Grid.Row="0" Grid.Column="1"
+                    Click="btnSave_Click" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                    FontFamily="Segoe UI Emoji" FontSize="25" Content="&#x1F4BE;" Padding="0, -4, 0, 0" >
+            <ToolTipService.ToolTip>
+                <ToolTip Content="Save the resulting image" Placement="Bottom" Background="LightYellow" Foreground="Black"/>
+            </ToolTipService.ToolTip>
+        </Button>
+
+        <Border x:Name="borderImgOrig" Grid.Row="1" Grid.Column="0" Background="Black" BorderThickness="2" BorderBrush="Gray" Margin="10, 10, 5, 10">
+            <Image x:Name="imgOrig" HorizontalAlignment="Center" Margin="0, 0, 0, 0" Stretch="Uniform"
+                   Source="Assets/Cat_Flowers.jpg">
+            </Image>
+        </Border>
+        <Border x:Name="borderImgEffect" Grid.Row="1" Grid.Column="1" Background="Black"  BorderThickness="2" BorderBrush="Gray" Margin="5, 10, 10, 10">
+            <Image x:Name="imgEffect" HorizontalAlignment="Center" Margin="0, 0, 0, 0" Stretch="Uniform">
+            </Image>            
+        </Border>
+
+        <Border x:Name="borderSCP" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="Black" BorderThickness="2" BorderBrush="Gray" Margin="10, 10, 10, 10">
+            <SwapChainPanel x:Name="scpD2D"                   
+              Margin="0, 0, 0, 0"
+               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+               RenderTransformOrigin="0.5 0.5" >
+            </SwapChainPanel>
+        </Border>
+
+    </Grid>
+</Window>
