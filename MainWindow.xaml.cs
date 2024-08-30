@@ -15,6 +15,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 
 using Direct2D;
+using static Direct2D.D2DTools;
 using DXGI;
 using GlobalStructures;
 using static DXGI.DXGITools;
@@ -2818,7 +2819,7 @@ namespace WinUI3_Direct2D_Effects
                             m_pD2DDeviceContext.Clear(new ColorF(ColorF.Enum.Black, 0));
 
                             ID2D1SolidColorBrush pBrush = null;
-                            hr = m_pD2DDeviceContext.CreateSolidColorBrush(new ColorF(ColorF.Enum.Magenta, 1.0f), null, out pBrush);
+                            hr = m_pD2DDeviceContext.CreateSolidColorBrush(new ColorF(ColorF.Enum.Magenta, 1.0f), BrushProperties(), out pBrush);
                             float nRadiusOrigX = ((float)sizeBitmapU.width / 10.0f) / 2.0f;
                             float nRadiusOrigY = ((float)sizeBitmapU.height / 10.0f) / 2.0f;
                             for (uint nX = 0; nX <= sizeBitmapU.width; nX += sizeBitmapU.width / 10)
