@@ -493,7 +493,7 @@ namespace WinUI3_Direct2D_Effects
 
             // Turbulence
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             nbTurbulenceSizeX.Value = sizeBitmapF.width;
             nbTurbulenceSizeY.Value = sizeBitmapF.height;
 
@@ -2285,7 +2285,7 @@ namespace WinUI3_Direct2D_Effects
             if (m_pD2DDeviceContext != null)
             {
                 m_pD2DDeviceContext.BeginDraw();
-                D2D1_SIZE_F size = m_pD2DDeviceContext.GetSize();              
+                m_pD2DDeviceContext.GetSize(out D2D1_SIZE_F size);              
 
                 if (!m_bAnimate)
                 {
@@ -2316,7 +2316,7 @@ namespace WinUI3_Direct2D_Effects
                     nDisplacementMapScale = 1.0f;
                     nDisplacementMapScaleStep = 1.05f;
 
-                    D2D1_SIZE_F sizeBmpBackground = listImages[nImage].GetSize();
+                    listImages[nImage].GetSize(out D2D1_SIZE_F sizeBmpBackground);
                     D2D1_RECT_F destRectBackground = new D2D1_RECT_F(0.0f, 0.0f, size.width, size.height);
                     D2D1_RECT_F sourceRectBackground = new D2D1_RECT_F(0.0f, 0.0f, sizeBmpBackground.width, sizeBmpBackground.height);
                     m_pD2DDeviceContext.DrawBitmap(listImages[nImage], ref destRectBackground, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE.D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, ref sourceRectBackground);
@@ -2343,7 +2343,7 @@ namespace WinUI3_Direct2D_Effects
                             imageRectangle.left = 0.0f;
                             imageRectangle.top = 0.0f;
 
-                            D2D1_SIZE_F bmpSize = listImages[nImage].GetSize();
+                            listImages[nImage].GetSize(out D2D1_SIZE_F bmpSize);
                             var scaleMatrix = Matrix3x2F.Scale(size.width / bmpSize.width, size.height / bmpSize.height);
 
                             imageRectangle.right = imageRectangle.left + bmpSize.width * (size.width / bmpSize.width);
@@ -2369,7 +2369,7 @@ namespace WinUI3_Direct2D_Effects
 
                             SetEffectFloatArray(pAffineTransformEffect, (uint)D2D1_2DAFFINETRANSFORM_PROP.D2D1_2DAFFINETRANSFORM_PROP_TRANSFORM_MATRIX, aFloatArray);
 
-                            D2D1_SIZE_F bmpSize2 = listImages[nImage2].GetSize();
+                            listImages[nImage2].GetSize(out D2D1_SIZE_F bmpSize2);
                             var scaleMatrix2 = Matrix3x2F.Scale(size.width / bmpSize2.width, size.height / bmpSize2.height);
 
                             float[] aFloatArray2 = {scaleMatrix2._11, scaleMatrix2._12,
@@ -2412,7 +2412,7 @@ namespace WinUI3_Direct2D_Effects
                             hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D12DAffineTransform, out pAffineTransformEffect);
                             pAffineTransformEffect.SetInput(0, listImages[nImage]);
 
-                            D2D1_SIZE_F bmpSize = listImages[nImage].GetSize();
+                            listImages[nImage].GetSize(out D2D1_SIZE_F bmpSize);
                             var scaleMatrix = Matrix3x2F.Scale(size.width / bmpSize.width, size.height / bmpSize.height);
 
                             float[] aFloatArray = {scaleMatrix._11, scaleMatrix._12,
@@ -2428,7 +2428,7 @@ namespace WinUI3_Direct2D_Effects
                                 nImage2 = 0;
                             pAffineTransformEffect2.SetInput(0, listImages[nImage2]);
 
-                            D2D1_SIZE_F bmpSize2 = listImages[nImage2].GetSize();
+                            listImages[nImage2].GetSize(out D2D1_SIZE_F bmpSize2);
                             var scaleMatrix2 = Matrix3x2F.Scale(size.width / bmpSize2.width, size.height / bmpSize2.height);
 
                             float[] aFloatArray2 = {scaleMatrix2._11, scaleMatrix2._12,
@@ -2474,7 +2474,7 @@ namespace WinUI3_Direct2D_Effects
                             hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D12DAffineTransform, out pAffineTransformEffect);
                             pAffineTransformEffect.SetInput(0, listImages[nImage]);
 
-                            D2D1_SIZE_F bmpSize = listImages[nImage].GetSize();
+                            listImages[nImage].GetSize(out D2D1_SIZE_F bmpSize);
                             var scaleMatrix = Matrix3x2F.Scale(size.width / bmpSize.width, size.height / bmpSize.height);
 
                             float[] aFloatArray1 = {scaleMatrix._11, scaleMatrix._12,
@@ -2532,7 +2532,7 @@ namespace WinUI3_Direct2D_Effects
                             hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D12DAffineTransform, out pAffineTransformEffect);
                             pAffineTransformEffect.SetInput(0, listImages[nImage]);
 
-                            D2D1_SIZE_F bmpSize = listImages[nImage].GetSize();
+                            listImages[nImage].GetSize(out D2D1_SIZE_F bmpSize);
                             var scaleMatrix = Matrix3x2F.Scale(size.width / bmpSize.width, size.height / bmpSize.height);
 
                             float[] aFloatArray1 = {scaleMatrix._11, scaleMatrix._12,
@@ -2584,7 +2584,7 @@ namespace WinUI3_Direct2D_Effects
                             hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D12DAffineTransform, out pAffineTransformEffect);
                             pAffineTransformEffect.SetInput(0, listImages[nImage]);
 
-                            D2D1_SIZE_F bmpSize = listImages[nImage].GetSize();
+                            listImages[nImage].GetSize(out D2D1_SIZE_F bmpSize);
                             var scaleMatrix = Matrix3x2F.Scale(size.width / bmpSize.width, size.height / bmpSize.height);
 
                             float[] aFloatArray1 = {scaleMatrix._11, scaleMatrix._12,
@@ -2612,7 +2612,7 @@ namespace WinUI3_Direct2D_Effects
                                 nImage2 = 0;
                             pAffineTransformEffect2.SetInput(0, listImages[nImage2]);
 
-                            D2D1_SIZE_F bmpSize2 = listImages[nImage2].GetSize();
+                            listImages[nImage2].GetSize(out D2D1_SIZE_F bmpSize2);
                             var scaleMatrix2 = Matrix3x2F.Scale(size.width / bmpSize2.width, size.height / bmpSize2.height);
 
                             float[] aFloatArray2 = {scaleMatrix2._11, scaleMatrix2._12,
@@ -2660,7 +2660,7 @@ namespace WinUI3_Direct2D_Effects
                             hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D12DAffineTransform, out pAffineTransformEffect);
                             pAffineTransformEffect.SetInput(0, listImages[nImage]);
 
-                            D2D1_SIZE_F bmpSize = listImages[nImage].GetSize();
+                            listImages[nImage].GetSize(out D2D1_SIZE_F bmpSize);
                             var scaleMatrix = Matrix3x2F.Scale(size.width / bmpSize.width, size.height / bmpSize.height);
 
                             float[] aFloatArray1 = {scaleMatrix._11, scaleMatrix._12,
@@ -2717,7 +2717,7 @@ namespace WinUI3_Direct2D_Effects
                             hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D12DAffineTransform, out pAffineTransformEffect2);
                             pAffineTransformEffect2.SetInput(0, listImages[nImage2]);
 
-                            D2D1_SIZE_F bmpSize2 = listImages[nImage2].GetSize();
+                            listImages[nImage2].GetSize(out D2D1_SIZE_F bmpSize2);
                             nRotationScaleX += (size.width / bmpSize2.width) / 360.0f;
                             nRotationScaleY += (size.height / bmpSize2.height) / 360.0f;
                             var scaleMatrix = Matrix3x2F.Scale(nRotationScaleX, nRotationScaleY);
@@ -2735,7 +2735,7 @@ namespace WinUI3_Direct2D_Effects
                             ID2D1Effect pCompositeEffect;
                             m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D1Composite, out pCompositeEffect);
 
-                            D2D1_SIZE_F bmpSize = listImages[nImage].GetSize();
+                            listImages[nImage].GetSize(out D2D1_SIZE_F bmpSize);
                             var scaleMatrix1 = Matrix3x2F.Scale(size.width / bmpSize.width, size.height / bmpSize.height);
 
                             float[] aFloatArray1 = {scaleMatrix1._11, scaleMatrix1._12,
@@ -2789,7 +2789,7 @@ namespace WinUI3_Direct2D_Effects
                             hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D12DAffineTransform, out pAffineTransformEffect);
                             pAffineTransformEffect.SetInput(0, listImages[nImage]);
 
-                            D2D1_SIZE_F bmpSize = listImages[nImage].GetSize();
+                            listImages[nImage].GetSize(out D2D1_SIZE_F bmpSize);
                             var scaleMatrix = Matrix3x2F.Scale(size.width / bmpSize.width, size.height / bmpSize.height);
 
                             float[] aFloatArray1 = {scaleMatrix._11, scaleMatrix._12,
@@ -2802,7 +2802,7 @@ namespace WinUI3_Direct2D_Effects
 
                             // Create mask with a grid of Ellipses (10x10)
 
-                            D2D1_SIZE_F sizeBitmapF = listImages[nImage2].GetSize();
+                            listImages[nImage2].GetSize(out D2D1_SIZE_F sizeBitmapF);
                             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
                             sizeBitmapU.width = (uint)sizeBitmapF.width;
                             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -2861,7 +2861,7 @@ namespace WinUI3_Direct2D_Effects
                             hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D12DAffineTransform, out pAffineTransformEffect2);
                             //pAffineTransformEffect2.SetInput(0, listImages[nImage2]);
 
-                            D2D1_SIZE_F bmpSize2 = listImages[nImage2].GetSize();
+                            listImages[nImage2].GetSize(out D2D1_SIZE_F bmpSize2);
                             var scaleMatrix2 = Matrix3x2F.Scale(size.width / bmpSize2.width, size.height / bmpSize2.height);
 
                             float[] aFloatArray2 = {scaleMatrix2._11, scaleMatrix2._12,
@@ -2925,7 +2925,7 @@ namespace WinUI3_Direct2D_Effects
                             hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D12DAffineTransform, out pAffineTransformEffect);
                             pAffineTransformEffect.SetInput(0, listImages[nImage]);
 
-                            D2D1_SIZE_F bmpSize = listImages[nImage].GetSize();
+                            listImages[nImage].GetSize(out D2D1_SIZE_F bmpSize);
                             var scaleMatrix = Matrix3x2F.Scale(size.width / bmpSize.width, size.height / bmpSize.height);
 
                             float[] aFloatArray1 = {scaleMatrix._11, scaleMatrix._12,
@@ -2986,7 +2986,7 @@ namespace WinUI3_Direct2D_Effects
                             hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D12DAffineTransform, out pAffineTransformEffect);
                             pAffineTransformEffect.SetInput(0, listImages[nImage]);
 
-                            D2D1_SIZE_F bmpSize = listImages[nImage].GetSize();
+                            listImages[nImage].GetSize(out D2D1_SIZE_F bmpSize);
                             var scaleMatrix = Matrix3x2F.Scale(size.width / bmpSize.width, size.height / bmpSize.height);
 
                             float[] aFloatArray1 = {scaleMatrix._11, scaleMatrix._12,
@@ -3044,7 +3044,7 @@ namespace WinUI3_Direct2D_Effects
                             hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D12DAffineTransform, out pAffineTransformEffect);
                             pAffineTransformEffect.SetInput(0, listImages[nImage]);
 
-                            D2D1_SIZE_F bmpSize = listImages[nImage].GetSize();
+                            listImages[nImage].GetSize(out D2D1_SIZE_F bmpSize);
                             var scaleMatrix = Matrix3x2F.Scale(size.width / bmpSize.width, size.height / bmpSize.height);
 
                             float[] aFloatArray1 = {scaleMatrix._11, scaleMatrix._12,
@@ -3105,7 +3105,7 @@ namespace WinUI3_Direct2D_Effects
                             hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D12DAffineTransform, out pAffineTransformEffect);
                             pAffineTransformEffect.SetInput(0, listImages[nImage]);
 
-                            D2D1_SIZE_F bmpSize = listImages[nImage].GetSize();
+                            listImages[nImage].GetSize(out D2D1_SIZE_F bmpSize);
                             var scaleMatrix = Matrix3x2F.Scale(size.width / bmpSize.width, size.height / bmpSize.height);
 
                             float[] aFloatArray1 = {scaleMatrix._11, scaleMatrix._12,
@@ -3186,11 +3186,11 @@ namespace WinUI3_Direct2D_Effects
             if (m_pD2DDeviceContext != null)
             {
                 m_pD2DDeviceContext.BeginDraw();
-                D2D1_SIZE_F size = m_pD2DDeviceContext.GetSize();
+                m_pD2DDeviceContext.GetSize(out D2D1_SIZE_F size);
 
                 if (!m_bAnimate)
                 { 
-                    D2D1_SIZE_F sizeBmpBackground = listImages[nImage].GetSize();
+                    listImages[nImage].GetSize(out D2D1_SIZE_F sizeBmpBackground);
                     D2D1_RECT_F destRectBackground = new D2D1_RECT_F(0.0f, 0.0f, size.width, size.height);
                     D2D1_RECT_F sourceRectBackground = new D2D1_RECT_F(0.0f, 0.0f, sizeBmpBackground.width, sizeBmpBackground.height);
                     m_pD2DDeviceContext.DrawBitmap(listImages[nImage], ref destRectBackground, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE.D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, ref sourceRectBackground);
@@ -3204,7 +3204,7 @@ namespace WinUI3_Direct2D_Effects
                         D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
                         imageRectangle.left = 0.0f;
                         imageRectangle.top = 0.0f;
-                        D2D1_SIZE_F bmpSize = listImages[nImage].GetSize();
+                        listImages[nImage].GetSize(out D2D1_SIZE_F bmpSize);
 
                         var scaleMatrix = Matrix3x2F.Scale(size.width/bmpSize.width, size.height/bmpSize.height);
                         imageRectangle.right = imageRectangle.left + bmpSize.width * (size.width / bmpSize.width);
@@ -3258,7 +3258,7 @@ namespace WinUI3_Direct2D_Effects
             {
                 Image img = (Image)sender;
                 Microsoft.UI.Input.PointerPoint point = e.GetCurrentPoint(img);
-                D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+                m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
                 double nWidth = img.ActualWidth;
                 double nHeight = img.ActualHeight;
                 float fRatioX = (float)nWidth / sizeBitmapF.width;
@@ -3271,7 +3271,7 @@ namespace WinUI3_Direct2D_Effects
             {
                 Image img = (Image)sender;
                 Microsoft.UI.Input.PointerPoint point = e.GetCurrentPoint(img);
-                D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+                m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
                 double nWidth = img.ActualWidth;
                 double nHeight = img.ActualHeight;
                 float fRatioX = (float)nWidth / sizeBitmapF.width;
@@ -3284,7 +3284,7 @@ namespace WinUI3_Direct2D_Effects
             {
                 Image img = (Image)sender;
                 Microsoft.UI.Input.PointerPoint point = e.GetCurrentPoint(img);
-                D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+                m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
                 double nWidth = img.ActualWidth;
                 double nHeight = img.ActualHeight;
                 float fRatioX = (float)nWidth / sizeBitmapF.width;
@@ -3297,7 +3297,7 @@ namespace WinUI3_Direct2D_Effects
             {
                 Image img = (Image)sender;
                 Microsoft.UI.Input.PointerPoint point = e.GetCurrentPoint(img);
-                D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+                m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
                 double nWidth = img.ActualWidth;
                 double nHeight = img.ActualHeight;
                 float fRatioX = (float)nWidth / sizeBitmapF.width;
@@ -3312,7 +3312,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -3354,7 +3354,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -3384,7 +3384,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -3416,7 +3416,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -3446,7 +3446,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -3479,7 +3479,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -3509,7 +3509,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -3540,7 +3540,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -3570,7 +3570,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -3634,7 +3634,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -3664,7 +3664,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -3724,7 +3724,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -3754,7 +3754,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -3783,7 +3783,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -3813,7 +3813,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -3842,7 +3842,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -3872,7 +3872,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -3901,7 +3901,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -3931,7 +3931,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -3977,7 +3977,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -4007,7 +4007,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -4079,7 +4079,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -4109,7 +4109,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -4145,7 +4145,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -4175,7 +4175,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -4204,7 +4204,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -4234,7 +4234,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -4279,7 +4279,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -4309,7 +4309,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -4341,7 +4341,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -4371,7 +4371,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -4414,7 +4414,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -4444,7 +4444,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -4488,7 +4488,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -4518,7 +4518,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -4548,7 +4548,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -4578,7 +4578,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -4622,7 +4622,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -4652,7 +4652,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -4697,7 +4697,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -4727,7 +4727,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -4758,7 +4758,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -4788,7 +4788,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmapTransparent2.GetSize();
+            m_pD2DBitmapTransparent2.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -4869,7 +4869,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmapTransparent2.GetSize();
+            m_pD2DBitmapTransparent2.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
 
@@ -4909,7 +4909,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -4962,7 +4962,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -4992,7 +4992,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -5046,7 +5046,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -5076,7 +5076,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -5108,7 +5108,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -5138,7 +5138,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -5167,7 +5167,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -5197,7 +5197,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -5226,7 +5226,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -5256,7 +5256,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -5283,7 +5283,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -5313,7 +5313,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -5347,7 +5347,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -5377,7 +5377,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -5404,7 +5404,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -5434,7 +5434,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -5464,7 +5464,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -5494,7 +5494,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -5524,7 +5524,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -5554,7 +5554,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -5585,7 +5585,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -5615,7 +5615,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -5645,7 +5645,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -5675,7 +5675,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -5710,7 +5710,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -5740,7 +5740,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -5776,7 +5776,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -5806,7 +5806,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -5847,7 +5847,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -5877,7 +5877,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -5935,7 +5935,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -5965,7 +5965,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -6006,7 +6006,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -6036,7 +6036,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -6074,7 +6074,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -6104,7 +6104,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -6138,7 +6138,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -6168,7 +6168,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -6208,7 +6208,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -6238,7 +6238,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -6271,7 +6271,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -6301,7 +6301,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -6337,7 +6337,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -6367,7 +6367,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -6407,7 +6407,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -6439,7 +6439,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -6468,7 +6468,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -6498,7 +6498,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -6557,7 +6557,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -6627,7 +6627,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -6658,7 +6658,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -6688,7 +6688,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapTransparentF = m_pD2DBitmapTransparent1.GetSize();
+            m_pD2DBitmapTransparent1.GetSize(out D2D1_SIZE_F sizeBitmapTransparentF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapTransparentF.width;
             sizeBitmapU.height = (uint)sizeBitmapTransparentF.height;
@@ -6738,7 +6738,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmapTransparent1.GetSize();
+            m_pD2DBitmapTransparent1.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             //m_pD2DDeviceContext.DrawImage(pOutputImageScaled, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -6775,7 +6775,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -6806,7 +6806,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -6836,7 +6836,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -6892,7 +6892,7 @@ namespace WinUI3_Direct2D_Effects
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
             imageRectangle.left = 0.0f;
             imageRectangle.top = 0.0f;
-            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
             m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
@@ -6923,7 +6923,7 @@ namespace WinUI3_Direct2D_Effects
         {
             HRESULT hr = HRESULT.S_OK;
 
-            D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+            m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
             D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
             sizeBitmapU.width = (uint)sizeBitmapF.width;
             sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -7217,7 +7217,7 @@ namespace WinUI3_Direct2D_Effects
 
                 SafeRelease(ref pWICBitmapSource);
 
-                D2D1_SIZE_F sizeBitmapF = m_pD2DBitmap.GetSize();
+                m_pD2DBitmap.GetSize(out D2D1_SIZE_F sizeBitmapF);
                 D2D1_SIZE_U sizeBitmapU = new D2D1_SIZE_U();
                 sizeBitmapU.width = (uint)sizeBitmapF.width;
                 sizeBitmapU.height = (uint)sizeBitmapF.height;
@@ -7329,11 +7329,18 @@ namespace WinUI3_Direct2D_Effects
                             //int nDataSize = pBytes.Length * Marshal.SizeOf(typeof(uint));
                             IntPtr pData = Marshal.AllocHGlobal(nDataSize);
                             Marshal.Copy(pBytes, 0, pData, nDataSize);
-                            D2D1_SIZE_F bmpSize = m_pD2DBitmap.GetSize();
+                            m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
                             IWICBitmap pWICBitmap;
 
                             int nStride = (int)(bmpSize.width * 4);
-                            var pixelFormat = (m_pD2DBitmap.GetPixelFormat().alphaMode == D2D1_ALPHA_MODE.D2D1_ALPHA_MODE_PREMULTIPLIED) ? GUID_WICPixelFormat32bppBGRA : GUID_WICPixelFormat32bppBGR;
+
+                            Guid pixelFormat;
+                            m_pD2DBitmap.GetPixelFormat(out D2D1_PIXEL_FORMAT D2DpixelFormat);
+                            if (D2DpixelFormat.alphaMode == D2D1_ALPHA_MODE.D2D1_ALPHA_MODE_PREMULTIPLIED)
+                                pixelFormat = GUID_WICPixelFormat32bppBGRA;
+                            else
+                                pixelFormat = GUID_WICPixelFormat32bppBGR;
+
                             //var pixelFormat = (m_pD2DBitmap.GetPixelFormat().alphaMode == D2D1_ALPHA_MODE.D2D1_ALPHA_MODE_PREMULTIPLIED)?GUID_WICPixelFormat32bppPBGRA:GUID_WICPixelFormat32bppBGR;
 
                             //int nSize = colorDepth == 3 ? (((stride + 3) / 4) * 4) * height : stride * height;
