@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Direct2D;
 using GlobalStructures;
-using Microsoft.UI.Xaml.Controls;
 
 namespace WIC
 {

@@ -3467,6 +3467,8 @@ namespace WinUI3_Direct2D_Effects
             hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D1EdgeDetection, out pEffect);
             pEffect.SetInput(0, m_pD2DBitmap);
 
+            if (_StrengthEdgeDetection == 0 && tsOverlay_Edges.IsOn == true)
+                _StrengthEdgeDetection = 0.01f;
             SetEffectFloat(pEffect, (uint)D2D1_EDGEDETECTION_PROP.D2D1_EDGEDETECTION_PROP_STRENGTH, _StrengthEdgeDetection);
             SetEffectFloat(pEffect, (uint)D2D1_EDGEDETECTION_PROP.D2D1_EDGEDETECTION_PROP_BLUR_RADIUS, _BlurRadiusEdgeDetection);
             SetEffectInt(pEffect, (uint)D2D1_EDGEDETECTION_PROP.D2D1_EDGEDETECTION_PROP_MODE, _ModeEdgeDetection);

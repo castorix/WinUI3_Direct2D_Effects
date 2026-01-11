@@ -1,4 +1,4 @@
-//#define DWRITE
+#define DWRITE
 using System;
 using System.Runtime.InteropServices;
 using DXGI;
@@ -4980,7 +4980,13 @@ namespace Direct2D
         [PreserveSig]
         HRESULT SetAttributeValue(string name, D2D1_SVG_ATTRIBUTE_STRING_TYPE type, string value);
         [PreserveSig]
-        HRESULT GetAttributeValue(string name, D2D1_SVG_ATTRIBUTE_STRING_TYPE type, out string value, uint valueCount);
+        //HRESULT GetAttributeValue(string name, D2D1_SVG_ATTRIBUTE_STRING_TYPE type, out string value, uint valueCount);
+        //HRESULT GetAttributeValue([MarshalAs(UnmanagedType.LPWStr)] string name, D2D1_SVG_ATTRIBUTE_STRING_TYPE type, [MarshalAs(UnmanagedType.LPWStr)] string value, uint valueCount);
+        //HRESULT GetAttributeValue(string name, D2D1_SVG_ATTRIBUTE_STRING_TYPE type, StringBuilder value, out uint valueCount);
+        HRESULT GetAttributeValue([MarshalAs(UnmanagedType.LPWStr)] string name, D2D1_SVG_ATTRIBUTE_STRING_TYPE type, IntPtr value,  uint valueCount);
+
+
+
         [PreserveSig]
         HRESULT GetAttributeValueLength(string name, D2D1_SVG_ATTRIBUTE_STRING_TYPE type, out uint valueLength);
         [PreserveSig]
@@ -8821,6 +8827,11 @@ namespace Direct2D
              uint FeatureLevels, uint SDKVersion, out IntPtr ppDevice, out D3D_FEATURE_LEVEL pFeatureLevel, out ID3D11DeviceContext ppImmediateContext);
 
         [DllImport("D3D11.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern HRESULT D3D11CreateDevice(IDXGIAdapter pAdapter, D3D_DRIVER_TYPE DriverType, IntPtr Software, uint Flags, [MarshalAs(UnmanagedType.LPArray)] int[] pFeatureLevels,
+            uint FeatureLevels, uint SDKVersion, out IntPtr ppDevice, out D3D_FEATURE_LEVEL pFeatureLevel, out IntPtr ppImmediateContext);
+
+
+        [DllImport("D3D11.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern HRESULT D3D11CreateDeviceAndSwapChain(IDXGIAdapter pAdapter, D3D_DRIVER_TYPE DriverType, IntPtr Software, uint Flags, IntPtr pFeatureLevels, uint FeatureLevels,
             //uint SDKVersion, ref DXGI_SWAP_CHAIN_DESC pSwapChainDesc, out IDXGISwapChain ppSwapChain, [Out, MarshalAs(UnmanagedType.SysUInt)] out IntPtr ppDevice, out D3D_FEATURE_LEVEL pFeatureLevel, out IntPtr ppImmediateContext);
             uint SDKVersion, ref DXGI_SWAP_CHAIN_DESC pSwapChainDesc, out IDXGISwapChain ppSwapChain, out IntPtr ppDevice, out D3D_FEATURE_LEVEL pFeatureLevel, out IntPtr ppImmediateContext);
@@ -9579,15 +9590,15 @@ namespace Direct2D
         #endregion
 
         [PreserveSig]
-        void VSSetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer ppConstantBuffers);
-        [PreserveSig]
-        void PSSetShaderResources(uint StartSlot, uint NumViews, ID3D11ShaderResourceView ppShaderResourceViews);
-        [PreserveSig]
-        void PSSetShader(ID3D11PixelShader pPixelShader, ID3D11ClassInstance ppClassInstances, uint NumClassInstances);
-        [PreserveSig]
-        void PSSetSamplers(uint StartSlot, uint NumSamplers, ID3D11SamplerState ppSamplers);
-        [PreserveSig]
-        void VSSetShader(ID3D11VertexShader pVertexShader, ID3D11ClassInstance ppClassInstances, uint NumClassInstances);
+        void VSSetConstantBuffers(uint StartSlot, uint NumBuffers, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] ID3D11Buffer[] ppConstantBuffers);
+        [PreserveSig]       
+        void PSSetShaderResources(uint StartSlot, uint NumViews, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] ID3D11ShaderResourceView[] ppShaderResourceViews);
+        [PreserveSig]        
+        void PSSetShader(ID3D11PixelShader pPixelShader, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] ID3D11ClassInstance[] ppClassInstances, uint NumClassInstances);
+        [PreserveSig]       
+        void PSSetSamplers(uint StartSlot, uint NumSamplers, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] ID3D11SamplerState[] ppSamplers);
+        [PreserveSig]       
+        void VSSetShader(ID3D11VertexShader pVertexShader, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] ID3D11ClassInstance[] ppClassInstances, uint NumClassInstances);
         [PreserveSig]
         void DrawIndexed(uint IndexCount, uint StartIndexLocation, int BaseVertexLocation);
         [PreserveSig]
@@ -9596,29 +9607,29 @@ namespace Direct2D
         HRESULT Map(ID3D11Resource pResource, uint Subresource, D3D11_MAP MapType, uint MapFlags, out D3D11_MAPPED_SUBRESOURCE pMappedResource);
         [PreserveSig]
         void Unmap(ID3D11Resource pResource, uint Subresource);
-        [PreserveSig]
-        void PSSetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer ppConstantBuffers);
+        [PreserveSig]       
+        void PSSetConstantBuffers(uint StartSlot, uint NumBuffers, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] ID3D11Buffer[] ppConstantBuffers);
         [PreserveSig]
         void IASetInputLayout(ID3D11InputLayout pInputLayout);
         [PreserveSig]
-        void IASetVertexBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer ppVertexBuffers, uint pStrides, uint pOffsets);
+        void IASetVertexBuffers(uint StartSlot, uint NumBuffers, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] ID3D11Buffer[] ppVertexBuffers, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] uint[] pStrides, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] uint[] pOffsets);
         [PreserveSig]
         void IASetIndexBuffer(ID3D11Buffer pIndexBuffer, DXGI_FORMAT Format, uint Offset);
         [PreserveSig]
         void DrawIndexedInstanced(uint IndexCountPerInstance, uint InstanceCount, uint StartIndexLocation, int BaseVertexLocation, uint StartInstanceLocation);
         [PreserveSig]
         void DrawInstanced(uint VertexCountPerInstance, uint InstanceCount, uint StartVertexLocation, uint StartInstanceLocation);
+        [PreserveSig]       
+        void GSSetConstantBuffers(uint StartSlot, uint NumBuffers, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] ID3D11Buffer[] ppConstantBuffers);
         [PreserveSig]
-        void GSSetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer ppConstantBuffers);
-        [PreserveSig]
-        void GSSetShader(ID3D11GeometryShader pShader, ID3D11ClassInstance ppClassInstances, uint NumClassInstances);
+        void GSSetShader(ID3D11GeometryShader pShader, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] ID3D11ClassInstance[] ppClassInstances, uint NumClassInstances);
         [PreserveSig]
         //void IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY Topology);
         void IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY Topology);
-        [PreserveSig]
-        void VSSetShaderResources(uint StartSlot, uint NumViews, ID3D11ShaderResourceView ppShaderResourceViews);
-        [PreserveSig]
-        void VSSetSamplers(uint StartSlot, uint NumSamplers, ID3D11SamplerState ppSamplers);
+        [PreserveSig]       
+        void VSSetShaderResources(uint StartSlot, uint NumViews, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] ID3D11ShaderResourceView[] ppShaderResourceViews);
+        [PreserveSig]       
+        void VSSetSamplers(uint StartSlot, uint NumSamplers, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] ID3D11SamplerState[] ppSamplers);
         [PreserveSig]
         void Begin(ID3D11Asynchronous pAsync);
         [PreserveSig]
@@ -9627,22 +9638,21 @@ namespace Direct2D
         HRESULT GetData(ID3D11Asynchronous pAsync, out IntPtr pData, uint DataSize, uint GetDataFlags);
         [PreserveSig]
         void SetPredication(ID3D11Predicate pPredicate, bool PredicateValue);
+        [PreserveSig]        
+        void GSSetShaderResources(uint StartSlot, uint NumViews, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] ID3D11ShaderResourceView[] ppShaderResourceViews);
+        [PreserveSig]        
+        void GSSetSamplers(uint StartSlot, uint NumSamplers, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] ID3D11SamplerState[] ppSamplers);
         [PreserveSig]
-        void GSSetShaderResources(uint StartSlot, uint NumViews, ID3D11ShaderResourceView ppShaderResourceViews);
+        void OMSetRenderTargets(uint NumViews, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] ID3D11RenderTargetView[] ppRenderTargetViews, ID3D11DepthStencilView pDepthStencilView);
         [PreserveSig]
-        void GSSetSamplers(uint StartSlot, uint NumSamplers, ID3D11SamplerState ppSamplers);
-        [PreserveSig]
-        void OMSetRenderTargets(uint NumViews, ID3D11RenderTargetView ppRenderTargetViews, ID3D11DepthStencilView pDepthStencilView);
-        [PreserveSig]
-        void OMSetRenderTargetsAndUnorderedAccessViews(uint NumRTVs, ID3D11RenderTargetView ppRenderTargetViews, ID3D11DepthStencilView pDepthStencilView,
-            uint UAVStartSlot, uint NumUAVs, ID3D11UnorderedAccessView ppUnorderedAccessViews, uint pUAVInitialCounts);
-        [PreserveSig]
-        //   _In_opt_  const FLOAT BlendFactor[ 4 ],
-        void OMSetBlendState(ID3D11BlendState pBlendState, float[] BlendFactor, uint SampleMask);
+        void OMSetRenderTargetsAndUnorderedAccessViews(uint NumRTVs, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] ID3D11RenderTargetView[] ppRenderTargetViews, ID3D11DepthStencilView pDepthStencilView,
+            uint UAVStartSlot, uint NumUAVs, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 4)] ID3D11UnorderedAccessView[] ppUnorderedAccessViews, uint pUAVInitialCounts);
+        [PreserveSig]       
+        void OMSetBlendState(ID3D11BlendState pBlendState, [In, Out, MarshalAs(UnmanagedType.LPArray)] float[] BlendFactor, uint SampleMask);
         [PreserveSig]
         void OMSetDepthStencilState(ID3D11DepthStencilState pDepthStencilState, uint StencilRef);
-        [PreserveSig]
-        void SOSetTargets(uint NumBuffers, ID3D11Buffer ppSOTargets, uint pOffsets);
+        [PreserveSig]        
+        void SOSetTargets(uint NumBuffers,  [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] ID3D11Buffer[] ppSOTargets,  [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] uint[] pOffsets);
         [PreserveSig]
         void DrawAuto();
         [PreserveSig]
@@ -9656,16 +9666,16 @@ namespace Direct2D
         [PreserveSig]
         void RSSetState(ID3D11RasterizerState pRasterizerState);
         [PreserveSig]
-        void RSSetViewports(uint NumViewports, D3D11_VIEWPORT pViewports);
+        void RSSetViewports(uint NumViewports, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] D3D11_VIEWPORT[] pViewports);
         [PreserveSig]
-        ////void RSSetScissorRects(uint NumRects, D3D11_RECT pRects);
-        void RSSetScissorRects(uint NumRects, RECT pRects);
+        void RSSetScissorRects(uint NumRects,  [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] RECT[] pRects);
         [PreserveSig]
         void CopySubresourceRegion(ID3D11Resource pDstResource, uint DstSubresource, uint DstX, uint DstY, uint DstZ, ID3D11Resource pSrcResource, uint SrcSubresource, D3D11_BOX pSrcBox);
         [PreserveSig]
         void CopyResource(ID3D11Resource pDstResource, ID3D11Resource pSrcResource);
         [PreserveSig]
-        void UpdateSubresource(ID3D11Resource pDstResource, uint DstSubresource, D3D11_BOX pDstBox, IntPtr pSrcData, uint SrcRowPitch, uint SrcDepthPitch);
+        //void UpdateSubresource(ID3D11Resource pDstResource, uint DstSubresource, D3D11_BOX pDstBox, IntPtr pSrcData, uint SrcRowPitch, uint SrcDepthPitch);
+        void UpdateSubresource(ID3D11Resource pDstResource, uint DstSubresource, IntPtr pDstBox, IntPtr pSrcData, uint SrcRowPitch, uint SrcDepthPitch);
         [PreserveSig]
         void CopyStructureCount(ID3D11Buffer pDstBuffer, uint DstAlignedByteOffset, ID3D11UnorderedAccessView pSrcView);
         [PreserveSig]
@@ -9811,7 +9821,6 @@ namespace Direct2D
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface ID3D11Buffer : ID3D11Resource
     {
-
         #region ID3D11Resource
         #region ID3D11DeviceChild
         [PreserveSig]
@@ -9945,28 +9954,73 @@ namespace Direct2D
     }
 
     //typedef D3D_SRV_DIMENSION D3D11_SRV_DIMENSION;
+    //[StructLayout(LayoutKind.Sequential)]
+    //public struct D3D11_SHADER_RESOURCE_VIEW_DESC
+    //{
+    //    public DXGI_FORMAT Format;
+    //    //public D3D11_SRV_DIMENSION ViewDimension;
+    //    public D3D_SRV_DIMENSION ViewDimension;
+
+    //    //    union 
+    //    //    {
+    //    //    D3D11_BUFFER_SRV Buffer;
+    //    //    D3D11_TEX1D_SRV Texture1D;
+    //    //    D3D11_TEX1D_ARRAY_SRV Texture1DArray;
+    //    //    D3D11_TEX2D_SRV Texture2D;
+    //    //    D3D11_TEX2D_ARRAY_SRV Texture2DArray;
+    //    //    D3D11_TEX2DMS_SRV Texture2DMS;
+    //    //    D3D11_TEX2DMS_ARRAY_SRV Texture2DMSArray;
+    //    //    D3D11_TEX3D_SRV Texture3D;
+    //    //    D3D11_TEXCUBE_SRV TextureCube;
+    //    //    D3D11_TEXCUBE_ARRAY_SRV TextureCubeArray;
+    //    //    D3D11_BUFFEREX_SRV BufferEx;
+    //    //};
+    //}
+
     [StructLayout(LayoutKind.Sequential)]
+    public struct D3D11_TEX2D_SRV
+    {
+        public uint MostDetailedMip;
+        public uint MipLevels;
+    }
+
+    public enum D3D11_SRV_DIMENSION : int
+    {
+        D3D11_SRV_DIMENSION_UNKNOWN = 0,
+        D3D11_SRV_DIMENSION_BUFFER = 1,
+        D3D11_SRV_DIMENSION_TEXTURE1D = 2,
+        D3D11_SRV_DIMENSION_TEXTURE1DARRAY = 3,
+        D3D11_SRV_DIMENSION_TEXTURE2D = 4,
+        D3D11_SRV_DIMENSION_TEXTURE2DARRAY = 5,
+        D3D11_SRV_DIMENSION_TEXTURE2DMS = 6,
+        D3D11_SRV_DIMENSION_TEXTURE2DMSARRAY = 7,
+        D3D11_SRV_DIMENSION_TEXTURE3D = 8,
+        D3D11_SRV_DIMENSION_TEXTURECUBE = 9,
+        D3D11_SRV_DIMENSION_TEXTURECUBEARRAY = 10,
+        D3D11_SRV_DIMENSION_BUFFEREX = 11
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
     public struct D3D11_SHADER_RESOURCE_VIEW_DESC
     {
+        [FieldOffset(0)]
         public DXGI_FORMAT Format;
-        //public D3D11_SRV_DIMENSION ViewDimension;
-        public D3D_SRV_DIMENSION ViewDimension;
 
-        //    union 
-        //    {
-        //    D3D11_BUFFER_SRV Buffer;
-        //    D3D11_TEX1D_SRV Texture1D;
-        //    D3D11_TEX1D_ARRAY_SRV Texture1DArray;
-        //    D3D11_TEX2D_SRV Texture2D;
-        //    D3D11_TEX2D_ARRAY_SRV Texture2DArray;
-        //    D3D11_TEX2DMS_SRV Texture2DMS;
-        //    D3D11_TEX2DMS_ARRAY_SRV Texture2DMSArray;
-        //    D3D11_TEX3D_SRV Texture3D;
-        //    D3D11_TEXCUBE_SRV TextureCube;
-        //    D3D11_TEXCUBE_ARRAY_SRV TextureCubeArray;
-        //    D3D11_BUFFEREX_SRV BufferEx;
-        //};
+        [FieldOffset(4)]
+        public D3D11_SRV_DIMENSION ViewDimension;
+
+        // Union starts here (offset 8)
+
+        [FieldOffset(8)]
+        public D3D11_TEX2D_SRV Texture2D;
+
+        // (Optional future use)
+        // [FieldOffset(8)]
+        // public D3D11_TEX2D_ARRAY_SRV Texture2DArray;
     }
+
+
+
 
     [ComImport]
     [Guid("ea82e40d-51dc-4f33-93d4-db7c9125ae8c")]
