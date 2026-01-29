@@ -2384,7 +2384,7 @@ namespace WinUI3_Direct2D_Effects
 
                             ID2D1Image pOutputImage = null;
                             pCompositeEffect.GetOutput(out pOutputImage);
-                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
 
                             nXTranslate *= 1.025f;
                             if (nXTranslate >= size.width)
@@ -2443,15 +2443,9 @@ namespace WinUI3_Direct2D_Effects
                             D2DTools.SetInputEffect(pCrossFadeEffect, 1, pAffineTransformEffect2);
 
                             D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0);
-                            D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
-                            imageRectangle.left = 0.0f;
-                            imageRectangle.top = 0.0f;
-                            imageRectangle.right = size.width;
-                            imageRectangle.bottom = size.height;
-
                             ID2D1Image pOutputImage = null;
                             pCrossFadeEffect.GetOutput(out pOutputImage);
-                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
 
                             nCrossFadeWeight /= 1.015f;
                             if (nCrossFadeWeight <= 0.015)
@@ -2497,15 +2491,9 @@ namespace WinUI3_Direct2D_Effects
                             D2DTools.SetInputEffect(pPerspectiveTransformEffect, 0, pAffineTransformEffect);
 
                             D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0);
-                            D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
-                            imageRectangle.left = 0.0f;
-                            imageRectangle.top = 0.0f;
-                            imageRectangle.right = size.width;
-                            imageRectangle.bottom = size.height;
-
                             ID2D1Image pOutputImage = null;
                             pPerspectiveTransformEffect.GetOutput(out pOutputImage);
-                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
 
                             nRotationX += 1.0f;
                             if (nRotationX >= 83.0f && !bRotation2)
@@ -2549,16 +2537,10 @@ namespace WinUI3_Direct2D_Effects
 
                             D2DTools.SetInputEffect(pBlurEffect, 0, pAffineTransformEffect);
 
-                            D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0);
-                            D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
-                            imageRectangle.left = 0.0f;
-                            imageRectangle.top = 0.0f;
-                            imageRectangle.right = size.width;
-                            imageRectangle.bottom = size.height;
-
+                            D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0); 
                             ID2D1Image pOutputImage = null;
                             pBlurEffect.GetOutput(out pOutputImage);
-                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
 
                             nStandardDeviationGaussianBlur += nBlurStep;
                             if (nStandardDeviationGaussianBlur >= 500 && nBlurStep > 0)
@@ -2626,15 +2608,9 @@ namespace WinUI3_Direct2D_Effects
                             D2DTools.SetInputEffect(pCompositeEffect, 1, pCropEffect);
 
                             D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0);
-                            D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
-                            imageRectangle.left = 0.0f;
-                            imageRectangle.top = 0.0f;
-                            imageRectangle.right = size.width;
-                            imageRectangle.bottom = size.height;
-
                             ID2D1Image pOutputImage = null;
                             pCompositeEffect.GetOutput(out pOutputImage);
-                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
 
                             nCropX += 5;
                             nCropY += 5;
@@ -2678,16 +2654,10 @@ namespace WinUI3_Direct2D_Effects
                             float[] aFloatArray = { 1.0f, nBrightnessWhiteY };
                             SetEffectFloatArray(pBrightnessEffect, (uint)D2D1_BRIGHTNESS_PROP.D2D1_BRIGHTNESS_PROP_WHITE_POINT, aFloatArray);
 
-                            D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0);
-                            D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
-                            imageRectangle.left = 0.0f;
-                            imageRectangle.top = 0.0f;
-                            imageRectangle.right = size.width;
-                            imageRectangle.bottom = size.height;
-
+                            D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0); 
                             ID2D1Image pOutputImage = null;
                             pBrightnessEffect.GetOutput(out pOutputImage);
-                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
 
                             nBrightnessWhiteY += nBrightnessWhiteYStep;
                             if (nBrightnessWhiteY <= 0 && nBrightnessWhiteYStep < 0)
@@ -2751,16 +2721,10 @@ namespace WinUI3_Direct2D_Effects
                             D2DTools.SetInputEffect(pCompositeEffect, 0, pAffineTransformEffect);
                             D2DTools.SetInputEffect(pCompositeEffect, 1, pAffineTransformEffect2);
 
-                            D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0);
-                            D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
-                            imageRectangle.left = 0.0f;
-                            imageRectangle.top = 0.0f;
-                            imageRectangle.right = size.width;
-                            imageRectangle.bottom = size.height;
-
+                            D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0);                           
                             ID2D1Image pOutputImage = null;
                             pCompositeEffect.GetOutput(out pOutputImage);
-                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
 
                             nRotationAngle += 1.0f;
                             if (nRotationAngle >= 360)
@@ -2880,21 +2844,15 @@ namespace WinUI3_Direct2D_Effects
                             m_pD2DDeviceContext.BeginDraw();
 
                             D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0);
-                            D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
-                            imageRectangle.left = 0.0f;
-                            imageRectangle.top = 0.0f;
-                            imageRectangle.right = size.width;
-                            imageRectangle.bottom = size.height;
-
                             ID2D1Image pOutputImage1 = null;
                             pAffineTransformEffect.GetOutput(out pOutputImage1);
-                            m_pD2DDeviceContext.DrawImage(pOutputImage1, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+                            m_pD2DDeviceContext.DrawImage(pOutputImage1, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
                             SafeRelease(ref pOutputImage1);
 
                             ID2D1Image pOutputImage = null;
                             //pAffineTransformEffect.GetOutput(out pOutputImage);
                             pAffineTransformEffect2.GetOutput(out pOutputImage);
-                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
 
                             // (300 - (30 * i))/2 = 270/2 = 135
                             //D2D1_RECT_F destRectangle = new D2D1_RECT_F();
@@ -2946,16 +2904,10 @@ namespace WinUI3_Direct2D_Effects
                 
                             D2DTools.SetInputEffect(pChromaKeyEffect, 0, pAffineTransformEffect);
 
-                            D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0);
-                            D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
-                            imageRectangle.left = 0.0f;
-                            imageRectangle.top = 0.0f;
-                            imageRectangle.right = size.width;
-                            imageRectangle.bottom = size.height;
-
+                            D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0); 
                             ID2D1Image pOutputImage = null;
                             pChromaKeyEffect.GetOutput(out pOutputImage);
-                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
 
                             nChromaKeyTolerance += nChromaKeyToleranceStep;
                             if (nChromaKeyTolerance >= 1.0f && nChromaKeyToleranceStep >= 0)
@@ -3004,16 +2956,10 @@ namespace WinUI3_Direct2D_Effects
 
                             D2DTools.SetInputEffect(pMorphologyEffect, 0, pAffineTransformEffect);
 
-                            D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0);
-                            D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
-                            imageRectangle.left = 0.0f;
-                            imageRectangle.top = 0.0f;
-                            imageRectangle.right = size.width;
-                            imageRectangle.bottom = size.height;
-
+                            D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0);  
                             ID2D1Image pOutputImage = null;
                             pMorphologyEffect.GetOutput(out pOutputImage);
-                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
 
                             nMorphologyWidth += nMorphologyStep;
                             nMorphologyHeight+= nMorphologyStep;
@@ -3066,15 +3012,9 @@ namespace WinUI3_Direct2D_Effects
                             D2DTools.SetInputEffect(pScaleEffect, 0, pAffineTransformEffect);
 
                             D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0);
-                            D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
-                            imageRectangle.left = 0.0f;
-                            imageRectangle.top = 0.0f;
-                            imageRectangle.right = size.width;
-                            imageRectangle.bottom = size.height;
-
                             ID2D1Image pOutputImage = null;
                             pScaleEffect.GetOutput(out pOutputImage);
-                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
 
                             nScaleX += nScaleStep;
                             nScaleY += nScaleStep;
@@ -3138,15 +3078,9 @@ namespace WinUI3_Direct2D_Effects
                             D2DTools.SetInputEffect(pDisplacementMapEffect, 1, pEffectTurbulence);                        
 
                             D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0);
-                            D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
-                            imageRectangle.left = 0.0f;
-                            imageRectangle.top = 0.0f;
-                            imageRectangle.right = size.width;
-                            imageRectangle.bottom = size.height;
-
                             ID2D1Image pOutputImage = null;
                             pDisplacementMapEffect.GetOutput(out pOutputImage);
-                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+                            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
 
                             nDisplacementMapScale *= nDisplacementMapScaleStep;
                             //if (nDisplacementMapScale >= 2000.0f && nDisplacementMapScaleStep >= 0)
@@ -3225,7 +3159,7 @@ namespace WinUI3_Direct2D_Effects
                         ID2D1Image pOutputImage = null;
                         pAffineTransformEffect.GetOutput(out pOutputImage);
 
-                        m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+                        m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
 
                         nXTranslate *= 1.025f;
                         if (nXTranslate >= size.width)
@@ -3357,7 +3291,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -3419,7 +3353,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -3484,7 +3418,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -3545,7 +3479,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -3639,7 +3573,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -3729,7 +3663,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -3788,7 +3722,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -3847,7 +3781,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -3906,7 +3840,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -3982,7 +3916,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -4084,7 +4018,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -4150,7 +4084,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -4209,7 +4143,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -4284,7 +4218,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -4346,7 +4280,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -4419,7 +4353,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -4493,7 +4427,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -4553,7 +4487,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -4627,7 +4561,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -4702,7 +4636,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -4763,7 +4697,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -4875,8 +4809,8 @@ namespace WinUI3_Direct2D_Effects
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
 
-            m_pD2DDeviceContext.DrawImage(pOutputImageEffectScaled, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
-            m_pD2DDeviceContext.DrawImage(pOutputImageOrig, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImageEffectScaled, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImageOrig, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
 
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
@@ -4967,7 +4901,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -5051,7 +4985,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -5113,7 +5047,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -5172,7 +5106,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -5231,7 +5165,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -5288,7 +5222,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -5352,7 +5286,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -5409,7 +5343,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -5469,7 +5403,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -5529,7 +5463,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -5590,7 +5524,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -5650,7 +5584,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -5715,7 +5649,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -5781,7 +5715,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -5852,7 +5786,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -5940,7 +5874,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -6011,7 +5945,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -6079,7 +6013,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -6143,7 +6077,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -6213,7 +6147,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -6276,7 +6210,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -6342,7 +6276,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -6412,7 +6346,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -6473,7 +6407,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -6530,7 +6464,7 @@ namespace WinUI3_Direct2D_Effects
             imageRectangle.top = 0.0f;
             imageRectangle.right = imageRectangle.left + sizeBitmapF.width;
             imageRectangle.bottom = imageRectangle.top + sizeBitmapF.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -6602,7 +6536,7 @@ namespace WinUI3_Direct2D_Effects
             imageRectangle.top = 0.0f;
             imageRectangle.right = imageRectangle.left + sizeBitmapF.width;
             imageRectangle.bottom = imageRectangle.top + sizeBitmapF.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -6663,7 +6597,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -6743,8 +6677,8 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmapTransparent1.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            //m_pD2DDeviceContext.DrawImage(pOutputImageScaled, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            //m_pD2DDeviceContext.DrawImage(pOutputImageScaled, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -6811,7 +6745,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -6857,14 +6791,7 @@ namespace WinUI3_Direct2D_Effects
 
             ID2D1Effect pEffect = null;
             hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D1Turbulence, out pEffect);
-            //pEffect.SetInput(0, m_pD2DBitmap);
-
-            ID2D1Effect pCompositeEffect;
-            hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D1Composite, out pCompositeEffect);
-            pCompositeEffect.SetInput(0, m_pD2DBitmap);
-            D2DTools.SetInputEffect(pCompositeEffect, 1, pEffect);
-
-            //SetEffectInt(pCompositeEffect, (uint)D2D1_COMPOSITE_PROP.D2D1_COMPOSITE_PROP_MODE, (uint)D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_XOR);
+            //pEffect.SetInput(0, m_pD2DBitmap);          
 
             float[] aFloatArray = {
                 (double.IsNaN(nbTurbulenceOffsetX.Value))?0:(float)nbTurbulenceOffsetX.Value,
@@ -6886,9 +6813,20 @@ namespace WinUI3_Direct2D_Effects
 
             SetEffectInt(pEffect, (uint)D2D1_TURBULENCE_PROP.D2D1_TURBULENCE_PROP_NOISE, (uint)_TurbulenceNoise);
             SetEffectInt(pEffect, (uint)D2D1_TURBULENCE_PROP.D2D1_TURBULENCE_PROP_STITCHABLE, (uint)(tsTurbulenceStitchable.IsOn ? 1 : 0));
+           
+            hr = m_pD2DDeviceContext.CreateEffect(D2DTools.CLSID_D2D1DisplacementMap, out ID2D1Effect pDisplacementMapEffect);
+            pDisplacementMapEffect.SetInput(0, m_pD2DBitmap);
+            pDisplacementMapEffect.SetInput(1, (ID2D1Image)pEffect);
+            //D2DTools.SetInputEffect(pDisplacementMapEffect, 1, pEffect);
+
+            //SetEffectFloat(pDisplacementMapEffect, (uint)D2D1_DISPLACEMENTMAP_PROP.D2D1_DISPLACEMENTMAP_PROP_SCALE, _TurbulenceNumOctaves*10); // amplitude in pixels
+            SetEffectFloat(pDisplacementMapEffect, (uint)D2D1_DISPLACEMENTMAP_PROP.D2D1_DISPLACEMENTMAP_PROP_SCALE, 25.0f); // amplitude in pixels
+
+            SetEffectInt(pDisplacementMapEffect, (uint)D2D1_DISPLACEMENTMAP_PROP.D2D1_DISPLACEMENTMAP_PROP_X_CHANNEL_SELECT, (uint)D2D1_CHANNEL_SELECTOR.D2D1_CHANNEL_SELECTOR_R);
+            SetEffectInt(pDisplacementMapEffect, (uint)D2D1_DISPLACEMENTMAP_PROP.D2D1_DISPLACEMENTMAP_PROP_Y_CHANNEL_SELECT, (uint)D2D1_CHANNEL_SELECTOR.D2D1_CHANNEL_SELECTOR_G);
 
             ID2D1Image pOutputImage = null;
-            pCompositeEffect.GetOutput(out pOutputImage);
+            pDisplacementMapEffect.GetOutput(out pOutputImage);
 
             D2D1_POINT_2F pt = new D2D1_POINT_2F(0, 0);
             D2D1_RECT_F imageRectangle = new D2D1_RECT_F();
@@ -6897,7 +6835,7 @@ namespace WinUI3_Direct2D_Effects
             m_pD2DBitmap.GetSize(out D2D1_SIZE_F bmpSize);
             imageRectangle.right = imageRectangle.left + bmpSize.width;
             imageRectangle.bottom = imageRectangle.top + bmpSize.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
@@ -6918,7 +6856,7 @@ namespace WinUI3_Direct2D_Effects
             SafeRelease(ref pTargetBitmap1);
             SafeRelease(ref pOutputImage);
             SafeRelease(ref pEffect);
-            SafeRelease(ref pCompositeEffect);
+            SafeRelease(ref pDisplacementMapEffect);
         }
 
         private void EffectDisplacementMap()
@@ -6981,7 +6919,7 @@ namespace WinUI3_Direct2D_Effects
             imageRectangle.top = 0.0f;
             imageRectangle.right = imageRectangle.left + sizeBitmapF.width;
             imageRectangle.bottom = imageRectangle.top + sizeBitmapF.height;
-            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, ref imageRectangle, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+            m_pD2DDeviceContext.DrawImage(pOutputImage, ref pt, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
             hr = m_pD2DDeviceContext.EndDraw(out ulong tag1, out ulong tag2);
             hr = m_pDXGISwapChain1.Present(1, 0);
             m_pD2DDeviceContext.SetTarget(m_pD2DTargetBitmap);
